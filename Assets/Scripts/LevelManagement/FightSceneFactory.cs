@@ -1,10 +1,17 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 
 public class FightSceneFactory: MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     private GameObject _playerObj;
+    
+    [SerializeField] private GameObject[] enemiesPrefs;
+    private List<GameObject> _enemiesObjs = new List<GameObject>();
     
     private void Awake()
     {
@@ -29,6 +36,16 @@ public class FightSceneFactory: MonoBehaviour
     
     private void InstantiateEnemies()
     {
-        // спавн врагов на их спавнпоинтыы
+        List<GameObject> spawnPoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("EnemySpawnPoint"));
+
+
+        foreach (GameObject enemy in enemiesPrefs)
+        {
+            int randomIndex = Random.Range(0, spawnPoints.Count);
+            Transform spawnPoint = spawnPoints[randomIndex].transform; 
+            spawnPoints.RemoveAt(randomIndex);
+            
+            _enemiesObjs.Add(Instantiate(enemy, spawnPoint.position, Quaternion.identity));
+        }
     }
 }
