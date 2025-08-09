@@ -6,7 +6,7 @@ public class ServiceLocator
 {
     private readonly Dictionary<string, IService> _services = new Dictionary<string, IService>();
 
-    public static ServiceLocator Current { get; private set; }
+    public static ServiceLocator Current { get; private set; } = new ServiceLocator();
 
     public static void Initialize()
     {
@@ -15,6 +15,9 @@ public class ServiceLocator
 
     public T Get<T>() where T : IService
     {
+        if (Current == null)
+            Initialize();
+        
         string key = typeof(T).Name;
         
         if (!_services.ContainsKey(key))
@@ -33,6 +36,9 @@ public class ServiceLocator
     /// <param name="service">Экземпляр сервиса</param>
     public void Register<T>(T service) where T : IService
     {
+        if (Current == null)
+            Initialize();
+        
         string key = typeof(T).Name;
         if (_services.ContainsKey(key))
         {
@@ -50,6 +56,9 @@ public class ServiceLocator
     /// <typeparam name="T">Тип сервиса.</typeparam>
     public void Unregister<T>() where T : IService
     {
+        if (Current == null)
+            Initialize();
+        
         string key = typeof(T).Name;
         if (!_services.ContainsKey(key))
         {
