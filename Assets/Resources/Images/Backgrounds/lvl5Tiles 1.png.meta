@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bece2082157aa3945a64b2b22acc6b5d
+guid: 87cff88bd000032418ebc62d6f342fe3
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -131,12 +131,12 @@ TextureImporter:
       name: lvl5Tiles_0
       rect:
         serializedVersion: 2
-        x: 96
+        x: 106
         y: 144
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,12 +153,12 @@ TextureImporter:
       name: lvl5Tiles_1
       rect:
         serializedVersion: 2
-        x: 96
+        x: 106
         y: 210
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,12 +175,12 @@ TextureImporter:
       name: lvl5Tiles_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 106
         y: 279
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -189,72 +189,6 @@ TextureImporter:
       bones: []
       spriteID: d7694db20310ddb90800000000000000
       internalID: -7215609721572256131
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lvl5Tiles_3
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 210
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 90eb2f607e8e65320800000000000000
-      internalID: 2546478718276255241
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lvl5Tiles_4
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 279
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: af94a0ff8359e6390800000000000000
-      internalID: -7823151430666401286
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: lvl5Tiles_5
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 144
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ab1381e510691c000800000000000000
-      internalID: 54489603122934202
       vertices: []
       indices: 
       edges: []

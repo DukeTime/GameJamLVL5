@@ -17,7 +17,7 @@ MonoBehaviour:
   Cooldown: 0.5
   SwingDuration: 0.2
   SwingArc: 120
-  SwingDistance: 2.91
+  SwingDistance: 2.7
   SlashEffectPrefab: {fileID: 8166474408956860946, guid: 5fb678332c20cf64b849c57252601816, type: 3}
   followSpeed: 2
   deadZoneRadius: 1.5

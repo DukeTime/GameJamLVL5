@@ -41,12 +41,12 @@ public class PlayerAttackVisualizer : MonoBehaviour
             _slashObjNum = 0;
         
         
-        GameObject slash = Instantiate(slashObj, position, Quaternion.identity);
+        GameObject slash = Instantiate(slashObj, transform.position, Quaternion.identity);
         
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 180;
         slash.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         
-        _movement.Push(Quaternion.AngleAxis(angle, Vector3.forward).ToEulerAngles(), pushPower);
+        _movement.Push(Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.left, pushPower);
         
         Destroy(slash, 0.3f);
         
