@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 813417323141087177}
   - component: {fileID: 1337239668035918549}
   - component: {fileID: 1873292536510014463}
+  - component: {fileID: 137427814786569064}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -265,9 +266,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _slashEffectPrefabs:
+<<<<<<< HEAD
   - {fileID: 7604003603827499860, guid: ce83d964d33f53d4081c8f9543090709, type: 3}
   - {fileID: 5975633183422547079, guid: c6c65941b3cb99144b7698355dc49af6, type: 3}
   pushPower: 2
+=======
+  - {fileID: 8398375555194879603, guid: f5fa43547d8d2e34da87c429c3be915a, type: 3}
+  - {fileID: 4081547758842870421, guid: 332ef387cf314aa4a8c1f6e66cba4b59, type: 3}
+  - {fileID: 7671965718613279524, guid: 0d30cbf3ec6595c45916955e2a2f1b59, type: 3}
+  pushPower: 10
+--- !u!114 &137427814786569064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691104930053176123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0da52a2bc3cc14c9660a87e48e7ee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointsCount: 8
+  radius: 1.5
+  angularSpeedDeg: 20
+  startAngleDeg: 0
+  randomizePhase: 0
+  drawGizmos: 1
+  gizmoSize: 0.12
+>>>>>>> 653f5a623ad5f912c6c05182def261ccf3386777
 --- !u!1 &2720063163690286497
 GameObject:
   m_ObjectHideFlags: 0
