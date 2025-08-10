@@ -38,34 +38,21 @@ public class PlayerController : MonoBehaviour, IService
         WalkState = new PlayerWalkState(this, StateMachine);
         InteractState = new PlayerInteractState(this, StateMachine);
     }
-
-
+    
+    
 
     private void Start()
     {
-        // Если машина состояний/стартовый стейт не назначены — не падаем, а логируем.
-        if (StateMachine == null || IdleState == null)
-        {
-            Debug.LogError($"[PlayerController] StateMachine/IdleState not set. " +
-                           $"Make sure you create states in Awake() and pass IdleState to Initialize().", this);
-            return;
-        }
         StateMachine.Initialize(IdleState);
     }
 
     private void Update()
     {
-        // Безопасная обвязка – пока машина/стейт не готовы, выходим
-        var st = StateMachine != null ? StateMachine.CurrentState : null;
-        if (st == null) return;
-        st.Update();
+        StateMachine.CurrentState.Update();
     }
 
     private void FixedUpdate()
     {
-        var st = StateMachine != null ? StateMachine.CurrentState : null;
-        if (st == null) return;
-        st.FixedUpdate();
+        StateMachine.CurrentState.FixedUpdate();
     }
-
 }

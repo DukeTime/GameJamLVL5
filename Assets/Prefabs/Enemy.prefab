@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 149379229438151323}
   - component: {fileID: 4395982471796958354}
   - component: {fileID: 4731696588520482924}
-  - component: {fileID: 4550523395043030394}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,14 +99,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2882268034879650907}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -115,10 +114,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!58 &149379229438151323
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,18 +166,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8100b878b71516840b6e85fdd42f678c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
+  viewRadius: 5
   stopDistance: 1.5
   moveSpeed: 3
   attackCooldown: 1.5
   damage: 10
   attackZonePrefab: {fileID: 6644741284715888586, guid: df131d8e44e1b1747a42437b7d10fc1b, type: 3}
   attackZoneOffset: 1.25
-  nav: {fileID: 0}
-  obstacleMaskFallback:
-    serializedVersion: 2
-    m_Bits: 0
-  requireLineOfSightForAttack: 1
   drawGizmos: 1
 --- !u!114 &4731696588520482924
 MonoBehaviour:
@@ -193,27 +187,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
---- !u!114 &4550523395043030394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2882268034879650907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edf847d078d75ea4a99d252ce748dd42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  speed: 3
-  nav: {fileID: 0}
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 8
-  repathInterval: 0.3
-  repathWhenTargetMoved: 0.5
-  pathStickTime: 0.35
-  directSwitchDistance: 1
-  targetSampleInterval: 0.2
-  waypointTolerance: 0.15
