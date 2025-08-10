@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour, IService
     [HideInInspector] public PlayerInputHandler Input { get; private set; }
     [HideInInspector] public PlayerMovement Movement { get; private set; }
     [HideInInspector] public PlayerAnimationController Animation { get; private set; }
+    [HideInInspector] public PlayerAttackController Attacking  { get; private set; }
 
     private void Awake()
     {
@@ -27,8 +28,9 @@ public class PlayerController : MonoBehaviour, IService
         Input = GetComponent<PlayerInputHandler>();
         Movement = GetComponent<PlayerMovement>();
         Animation = GetComponent<PlayerAnimationController>();
-        
-        
+        Attacking = GetComponent<PlayerAttackController>();
+
+        Input.AttackPressed += Attacking.Attack;
         
         // Инициализация state machine
         StateMachine = new PlayerStateMachine();

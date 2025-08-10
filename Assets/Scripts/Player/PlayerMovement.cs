@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
         
         _rb.linearVelocity = _input.MovementInput * speed;
     }
+    
+    public void Push(Vector2 direction, float power = 10f)
+    {
+        _rb.AddForce(direction * power, ForceMode2D.Impulse);
+    }
 
     public void Stop() => _rb.linearVelocity = Vector2.zero;
 }

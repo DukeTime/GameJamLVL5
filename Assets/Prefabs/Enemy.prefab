@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 352196599123857144}
   - component: {fileID: 149379229438151323}
   - component: {fileID: 4395982471796958354}
+  - component: {fileID: 4731696588520482924}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -173,3 +174,16 @@ MonoBehaviour:
   attackZonePrefab: {fileID: 6644741284715888586, guid: df131d8e44e1b1747a42437b7d10fc1b, type: 3}
   attackZoneOffset: 1.25
   drawGizmos: 1
+--- !u!114 &4731696588520482924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882268034879650907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b1dc7eb7c8549318af8e2bfc300cc3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxHealth: 100

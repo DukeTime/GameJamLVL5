@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b90081b7ee2d8214e8438c81c5c1a95f
+guid: 21e4c883f87c24f43beabe3619dfcced
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5781970946756127084
-    second: TEST_MAP_CHAR_0
+      213: 3571674189862588733
+    second: attack9_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TEST_MAP_CHAR_0
+      name: attack9_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 46
-        height: 77
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c69270f11ffad3050800000000000000
-      internalID: 5781970946756127084
+      spriteID: d31d03c80c2219130800000000000000
+      internalID: 3571674189862588733
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 24ee64d10b30c0c46bfe94a8f76a1e08
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TEST_MAP_CHAR_0: 5781970946756127084
+      attack9_0: 3571674189862588733
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
