@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 227766584}
   - component: {fileID: 227766583}
+  - component: {fileID: 227766585}
   m_Layer: 0
   m_Name: GameFactory
   m_TagString: Untagged
@@ -143,12 +144,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227766582}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
+  playerController: {fileID: 3818281597649534243, guid: 58c4f2731f1bf0a4caa5113c8439ce89, type: 3}
   enemiesPrefs:
   - {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
   - {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
@@ -167,6 +168,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &227766585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227766582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1eec51b2f74b14408d4f56d3c9f9254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hatches:
+  - root: {fileID: 1607625543}
+    minDistanceToPlayer: 1
+    smokePrefab: {fileID: 6644741284715888586, guid: df131d8e44e1b1747a42437b7d10fc1b, type: 3}
+    telegraphDuration: 3
+  player: {fileID: 429411781681037097, guid: 58c4f2731f1bf0a4caa5113c8439ce89, type: 3}
+  waves:
+  - enemies:
+    - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
+      count: 3
+    preWaveDelay: 3
+    perSpawnDelay: 1
+  - enemies:
+    - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
+      count: 3
+    preWaveDelay: 5
+    perSpawnDelay: 1
+  afterWaveDelay: 1
+  avoidNearestHatchToPlayer: 1
+  statue: {fileID: 1888866799}
+  arrowPrefab: {fileID: 521346378}
+  arrowOffset: {x: 0, y: 1.6, z: 0}
+  interactRadius: 1.5
+  nextSceneName: 
 --- !u!1 &400245461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2612,7 +2649,8 @@ GameObject:
   - component: {fileID: 1885732008}
   - component: {fileID: 1885732007}
   - component: {fileID: 1885732006}
-  m_Layer: 0
+  - component: {fileID: 1885732009}
+  m_Layer: 3
   m_Name: Objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3181,6 +3219,27 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!114 &1885732009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885732002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8875109efeb935045be6bd6257e9d04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1885732005}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 8
+  cellProbeScale: 0.85
+  agentRadius: 0.25
+  extraClearance: 0.585
+  eightDirections: 1
+  drawWalkable: 0
 --- !u!1 &1888866798
 GameObject:
   m_ObjectHideFlags: 0
