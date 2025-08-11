@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour, IService
     [HideInInspector] public PlayerAnimationController Animation { get; private set; }
     [HideInInspector] public PlayerAttackController Attacking  { get; private set; }
 
+    [SerializeField] private PlayerUI playerUI;
+
     private void Awake()
     {
         // Инициализация компонентов
@@ -31,6 +33,9 @@ public class PlayerController : MonoBehaviour, IService
         Attacking = GetComponent<PlayerAttackController>();
 
         Input.AttackPressed += Attacking.Attack;
+        Input.InteractNpc += 
+        Input.NpcZoneEntered += playerUI.ShowInteractBtn;
+        Input.NpcZoneExit += playerUI.HideInteractBtn;
         
         // Инициализация state machine
         StateMachine = new PlayerStateMachine();
@@ -38,8 +43,6 @@ public class PlayerController : MonoBehaviour, IService
         WalkState = new PlayerWalkState(this, StateMachine);
         InteractState = new PlayerInteractState(this, StateMachine);
     }
-    
-    
 
     private void Start()
     {
@@ -55,4 +58,6 @@ public class PlayerController : MonoBehaviour, IService
     {
         StateMachine.CurrentState.FixedUpdate();
     }
+    
+    
 }

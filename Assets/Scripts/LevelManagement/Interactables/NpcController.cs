@@ -1,103 +1,125 @@
 using System.Collections;
-using DefaultNamespace.DialogueSystem;
 using UnityEngine;
 
 
 public class NpcController : Interactable
 {
-    [SerializeField] private GameObject interactionPanel; // Панель с буквой "E"
-    [SerializeField] private float fadeDuration = 0.3f; // Длительность анимации
-
-    private CanvasGroup canvasGroup;
-    private bool isPlayerInRange = false;
-
-    private void Awake()
-    {
-        // Настройка панели
-        if (interactionPanel != null)
-        {
-            canvasGroup = interactionPanel.GetComponent<CanvasGroup>();
-            if (canvasGroup == null)
-            {
-                canvasGroup = interactionPanel.AddComponent<CanvasGroup>();
-            }
-            
-            interactionPanel.SetActive(false);
-            canvasGroup.alpha = 0f;
-        }
-    }
-
-    private void Update()
-    {
-        // Проверка нажатия E, когда игрок в зоне
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E))
-        {
-            Interact();
-        }
-    }
-
-    // Вызывается, когда игрок входит в зону взаимодействия
-    public void ShowInteractionPrompt()
-    {
-        isPlayerInRange = true;
-        StopAllCoroutines();
-        interactionPanel.SetActive(true);
-        StartCoroutine(FadePanel(0f, 1f, fadeDuration));
-    }
-
-    // Вызывается, когда игрок выходит из зоны взаимодействия
-    public void HideInteractionPrompt()
-    {
-        isPlayerInRange = false;
-        StopAllCoroutines();
-        StartCoroutine(FadePanel(1f, 0f, fadeDuration, () => 
-        {
-            interactionPanel.SetActive(false);
-        }));
-    }
-
-    // Обработка взаимодействия
+    // [Header("Settings")]
+    // [SerializeField] private SpriteRenderer interactionSprite; // Спрайт с буквой "E"
+    // [SerializeField] private float fadeSpeed = 5f; // Скорость анимации
+    // [SerializeField] private KeyCode interactionKey = KeyCode.E; // Клавиша взаимодействия
+    //
+    // private bool isPlayerInRange = false;
+    // private bool isInteractable = true;
+    // private Color originalColor;
+    public string dialogue = "TestDialogue";
+    public bool interacted = false;
+    
     public override void Interact()
     {
-        Debug.Log("Interacted with " + gameObject.name);
-        // Здесь добавьте свою логику взаимодействия
-    }
-
-    // Анимация плавного появления/исчезновения
-    private IEnumerator FadePanel(float startAlpha, float endAlpha, float duration, System.Action onComplete = null)
-    {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < duration)
+        if (interacted)
         {
-            elapsedTime += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
-            yield return null;
-        }
-
-        canvasGroup.alpha = endAlpha;
-        onComplete?.Invoke();
-    }
-
-    // Методы для триггеров (можно использовать OnTriggerEnter/Exit в 3D или OnCollisionEnter2D/Exit2D в 2D)
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            ShowInteractionPrompt();
+            DialogSystem.Instance.LoadDialog(dialogue);
+            interacted = true;
+            // Ваша логика взаимодействия здесь
+            
+            // Пример: временно отключаем взаимодействие после использования
+            // StartCoroutine(CooldownInteraction(1f));}}}
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            HideInteractionPrompt();
-        }
-    }
-
-    private void Start()
-    {
-        DialogSystem.Instance.LoadDialog("TestDialogue");
-    }
+    //
+    // private void Update()
+    // {
+    //     if (isPlayerInRange && isInteractable && Input.GetKeyDown(interactionKey))
+    //     {
+    //         Interact();
+    //     }
+    // }
+    //
+    // public void ShowInteraction()
+    // {
+    //     if (!isInteractable || interactionSprite == null) return;
+    //
+    //     isPlayerInRange = true;
+    //     StopAllCoroutines();
+    //     interactionSprite.gameObject.SetActive(true);
+    //     StartCoroutine(FadeSprite(0f, originalColor.a));
+    // }
+    //
+    // public void HideInteraction()
+    // {
+    //     if (interactionSprite == null) return;
+    //
+    //     isPlayerInRange = false;
+    //     StopAllCoroutines();
+    //     StartCoroutine(FadeSprite(interactionSprite.color.a, 0f, () => 
+    //     {
+    //         interactionSprite.gameObject.SetActive(false);
+    //     }));
+    // }
+    //
+    // private IEnumerator FadeSprite(float startAlpha, float endAlpha, System.Action onComplete = null)
+    // {
+    //     float progress = 0f;
+    //     Color currentColor = interactionSprite.color;
+    //
+    //     while (progress < 1f)
+    //     {
+    //         Debug.Log(3);
+    //         progress += Time.deltaTime * fadeSpeed;
+    //         currentColor.a = Mathf.Lerp(startAlpha, endAlpha, progress);
+    //         interactionSprite.color = currentColor;
+    //         yield return null;
+    //     }
+    //
+    //     currentColor.a = endAlpha;
+    //     interactionSprite.color = currentColor;
+    //     onComplete?.Invoke();
+    // }
+    //
+    // public override void Interact()
+    // {
+    //     Debug.Log("Interacted with " + gameObject.name);
+    //     // Ваша логика взаимодействия здесь
+    //     
+    //     // Пример: временно отключаем взаимодействие после использования
+    //     // StartCoroutine(CooldownInteraction(1f));
+    // }
+    //
+    // private IEnumerator CooldownInteraction(float duration)
+    // {
+    //     isInteractable = false;
+    //     yield return new WaitForSeconds(duration);
+    //     isInteractable = true;
+    // }
+    //
+    // // Методы для триггеров
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     Debug.Log(1);
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         Debug.Log(2);
+    //         ShowInteraction();
+    //     }
+    // }
+    //
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if (other.CompareTag("Player"))
+    //     {
+    //         HideInteraction();
+    //     }
+    // }
+    //
+    // private void Start()
+    // {
+    //     //DialogSystem.Instance.LoadDialog("TestDialogue");
+    //     if (interactionSprite != null)
+    //     {
+    //         originalColor = interactionSprite.color;
+    //         interactionSprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+    //         interactionSprite.gameObject.SetActive(false);
+    //     }
+    // }
 }

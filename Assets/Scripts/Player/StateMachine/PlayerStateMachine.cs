@@ -57,10 +57,10 @@ public class PlayerIdleState : PlayerBaseState
         {
             stateMachine.ChangeState(player.WalkState);
         }
-        else if (player.Input.InteractPressed)
-        {
-            stateMachine.ChangeState(player.InteractState);
-        }
+        // else if (player.Input.InteractPressed)
+        // {
+        //     stateMachine.ChangeState(player.InteractState);
+        // }
     }
 }
 
@@ -78,10 +78,10 @@ public class PlayerWalkState : PlayerBaseState
         {
             stateMachine.ChangeState(player.IdleState);
         }
-        else if (player.Input.InteractPressed)
-        {
-            stateMachine.ChangeState(player.InteractState);
-        }
+        // else if (player.Input.InteractPressed)
+        // {
+        //     stateMachine.ChangeState(player.InteractState);
+        // }
     }
 
     public override void FixedUpdate()

@@ -1,123 +1,137 @@
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-namespace DefaultNamespace.DialogueSystem
+public class DialogSystem : MonoBehaviour
 {
-    using System.Collections.Generic;
-    using UnityEngine;
-
-    public class DialogSystem : MonoBehaviour
-    {
-        public static DialogSystem Instance { get; private set; }
-        
-        [SerializeField] private string dialogsFolder = "Dialogs";
-        [SerializeField] private string charactersFolder = "Characters";
-        
-        private Dictionary<string, DialogData> loadedDialogs = new Dictionary<string, DialogData>();
-        private Dictionary<string, CharacterData> characters = new Dictionary<string, CharacterData>();
-        
-        private DialogData currentDialog;
-        private int currentPhraseIndex;
-        
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-            LoadAllCharacters();
-        }
-        
-        private void LoadAllCharacters()
-        {
-            CharacterData[] loadedCharacters = Resources.LoadAll<CharacterData>(charactersFolder);
-            foreach (var character in loadedCharacters)
-            {
-                characters[character.characterId] = character;
-            }
-        }
-
-        public void LoadDialog(string dialogName)
-        {
-            LoadFiles(dialogName);
-            
-            GlobalGameController.CutsceneFreeze();
-            
-            currentPhraseIndex = 0;
-            StartCoroutine(DialogueCor());
-        }
-
-        private IEnumerator DialogueCor()
-        {
-            while (currentPhraseIndex < currentDialog.phrases.Count)
-            {
-                ShowCurrentPhrase();
-
-                yield return null;
-
-                while (!Input.GetMouseButtonDown(0))
-                {
-                    yield return null;
-                }
-
-                currentPhraseIndex++;
-            }
-            EndDialog();
-        }
-        
-        public void LoadFiles(string dialogName)
-        {
-            // Пытаемся найти уже загруженный диалог
-            if (loadedDialogs.TryGetValue(dialogName, out currentDialog))
-            {
-                //StartDialog();
-                return;
-            }
-
-            // Формируем путь относительно папки Resources
-            string resourcePath = $"{dialogsFolder}/{dialogName}";
+    public static DialogSystem Instance { get; private set; }
     
-            TextAsset jsonFile = Resources.Load<TextAsset>(resourcePath);
-            if (jsonFile == null)
+    [SerializeField] private string dialogsFolder = "Dialogs";
+    [SerializeField] private string charactersFolder = "Characters";
+    [SerializeField] private float textSpeed = 20f; // Characters per second
+    
+    private Dictionary<string, DialogData> loadedDialogs = new Dictionary<string, DialogData>();
+    private Dictionary<string, CharacterData> characters = new Dictionary<string, CharacterData>();
+    
+    private DialogData currentDialog;
+    private int currentPhraseIndex;
+    public bool isTyping = false;
+    private Coroutine typingCoroutine;
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
+        LoadAllCharacters();
+    }
+    
+    private void LoadAllCharacters()
+    {
+        CharacterData[] loadedCharacters = Resources.LoadAll<CharacterData>(charactersFolder);
+        foreach (var character in loadedCharacters)
+        {
+            characters[character.characterId] = character;
+        }
+    }
+
+    public void LoadDialog(string dialogName)
+    {
+        LoadFiles(dialogName);
+        
+        GlobalGameController.CutsceneFreeze();
+        
+        currentPhraseIndex = 0;
+        StartCoroutine(DialogueCor());
+    }
+
+    private IEnumerator DialogueCor()
+    {
+        while (currentPhraseIndex < currentDialog.phrases.Count)
+        {
+            ShowCurrentPhrase();
+
+            // Wait for typing to complete or skip
+            while (isTyping)
             {
-                Debug.LogError($"Dialog file {dialogName} not found at path: {resourcePath}");
-                // Дополнительная диагностика - выведем все доступные файлы
-                var allDialogs = Resources.LoadAll<TextAsset>(dialogsFolder);
-                Debug.Log($"Available dialogs in {dialogsFolder}:");
-                foreach (var dialog in allDialogs)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    Debug.Log(dialog.name);
+                    if (typingCoroutine != null)
+                    {
+                        StopCoroutine(typingCoroutine);
+                        typingCoroutine = null;
+                    }
+                    DialogView.Instance.CompleteTextImmediately();
+                    isTyping = false;
                 }
-                return;
+                yield return null;
             }
 
-            currentDialog = JsonUtility.FromJson<DialogData>(jsonFile.text);
-            loadedDialogs[dialogName] = currentDialog;
-        }
-        
-        private void ShowCurrentPhrase()
-        {
-            var currentPhrase = currentDialog.phrases[currentPhraseIndex];
-            DialogView.Instance.ShowPhrase(currentPhrase);
-        }
-        
-        private void EndDialog()
-        {
-            DialogView.Instance.Hide();
-            currentDialog = null;
-        }
-        
-        public CharacterData GetCharacterData(string characterId)
-        {
-            if (characters.TryGetValue(characterId, out var character))
+            // Wait for click to continue
+            while (!Input.GetMouseButtonDown(0))
             {
-                return character;
+                yield return null;
             }
-            return null;
+
+            yield return null;
+            currentPhraseIndex++;
         }
+        EndDialog();
+    }
+    
+    public void LoadFiles(string dialogName)
+    {
+        if (loadedDialogs.TryGetValue(dialogName, out currentDialog))
+        {
+            return;
+        }
+
+        string resourcePath = $"{dialogsFolder}/{dialogName}";
+
+        TextAsset jsonFile = Resources.Load<TextAsset>(resourcePath);
+        if (jsonFile == null)
+        {
+            Debug.LogError($"Dialog file {dialogName} not found at path: {resourcePath}");
+            var allDialogs = Resources.LoadAll<TextAsset>(dialogsFolder);
+            Debug.Log($"Available dialogs in {dialogsFolder}:");
+            foreach (var dialog in allDialogs)
+            {
+                Debug.Log(dialog.name);
+            }
+            return;
+        }
+
+        currentDialog = JsonUtility.FromJson<DialogData>(jsonFile.text);
+        loadedDialogs[dialogName] = currentDialog;
+    }
+    
+    private void ShowCurrentPhrase()
+    {
+        var currentPhrase = currentDialog.phrases[currentPhraseIndex];
+        typingCoroutine = StartCoroutine(DialogView.Instance.ShowPhraseAnimated(currentPhrase, textSpeed));
+        isTyping = true;
+    }
+    
+    private void EndDialog()
+    {
+        DialogView.Instance.Hide();
+        currentDialog = null;
+        
+        GlobalGameController.CutsceneUnfreeze();
+    }
+    
+    public CharacterData GetCharacterData(string characterId)
+    {
+        if (characters.TryGetValue(characterId, out var character))
+        {
+            return character;
+        }
+        return null;
     }
 }

@@ -1,0 +1,16 @@
+{
+  "phrases": [
+    {
+      "characterId": "Незнакомец",
+      "emotion": "",
+      "text": "Приветствую, путник! Как твои дела?",
+      "textStyle": "default"
+    },
+    {
+      "characterId": "Игрок",
+      "emotion": "",
+      "text": "Неплохо, спасибо что спросил!",
+      "textStyle": "player"
+    }
+  ]
+}
