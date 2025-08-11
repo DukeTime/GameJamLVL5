@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 149379229438151323}
   - component: {fileID: 4395982471796958354}
   - component: {fileID: 4731696588520482924}
+  - component: {fileID: 1644804088572693952}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -99,14 +100,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2882268034879650907}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -114,10 +115,10 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!58 &149379229438151323
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -166,13 +167,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8100b878b71516840b6e85fdd42f678c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 5
-  stopDistance: 1.5
+  viewRadius: 10
   moveSpeed: 3
+  stopDistance: 1.5
   attackCooldown: 1.5
   damage: 10
   attackZonePrefab: {fileID: 6644741284715888586, guid: df131d8e44e1b1747a42437b7d10fc1b, type: 3}
   attackZoneOffset: 1.25
+  approachEnterSlotDistance: 0.35
+  approachAlignAngleDeg: 30
+  requireLOSForApproach: 0
+  losObstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  approachCommitTime: 1.3
   drawGizmos: 1
 --- !u!114 &4731696588520482924
 MonoBehaviour:
@@ -187,3 +195,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
+--- !u!114 &1644804088572693952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882268034879650907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf847d078d75ea4a99d252ce748dd42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nav: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxSpeed: 3.2
+  acceleration: 25
+  waypointTolerance: 0.12
+  checkpointCount: 10
+  minPathLengthForManyPoints: 2
+  minCheckpointSpacing: 0.15
+  stuckRebuildTime: 1.5
+  stuckProgressEpsilon: 0.05
+  enableDirectMode: 1
+  directSampleInterval: 0.15
+  blockedSampleInterval: 0.5

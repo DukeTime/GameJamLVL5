@@ -1,168 +1,215 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Detection & Movement")]
-    public float viewRadius = 10f;
-    public float stopDistance = 2.5f;
-    public float moveSpeed = 3f;
+    [Header("Perception")]
+    public float viewRadius = 12f;
+
+    [Header("Movement")]
+    public float moveSpeed = 3.2f;          // прокинем в EnemyPathMover.maxSpeed
 
     [Header("Attack")]
-    public float attackCooldown = 1.5f;
+    public float stopDistance = 2.4f;
+    public float attackCooldown = 1.2f;
     public int damage = 10;
-    public GameObject attackZonePrefab; // Префаб зоны атаки
-    public float attackZoneOffset = 1.25f; // смещение зоны атаки вперёд
+    public GameObject attackZonePrefab;
+    public float attackZoneOffset = 1.1f;
 
-    [Header("DEBUG")]
+    [Header("Orbit → Approach")]
+    public float approachEnterSlotDistance = 0.35f;
+    [Range(0f, 60f)] public float approachAlignAngleDeg = 30f;
+    public bool requireLOSForApproach = false;
+    [Tooltip("Слой стен для LOS/валидности слота. Если 0 — LOS не проверяем.")]
+    public LayerMask losObstacleMask;
+    public float approachCommitTime = 1.3f;
+
+    [Header("Debug")]
     public bool drawGizmos = true;
 
-    private Transform player;
-    private bool canAttack = true;
-    private State state = State.Idle;
-    private GameObject currentAttackZone; // Ссылка на активную зону
+    Transform player;
+    Transform orbitTarget; int mySlotIndex = -1; int myId;
 
-    private enum State { Idle, Chase, Attack }
+    GameObject currentAttackZone; bool canAttack = true;
+
+    enum State { Idle, Flank, Approach, Attack }
+    State state = State.Idle;
+    float approachUntil = 0f;
+
+    // Path mover
+    EnemyPathMover mover;
 
     void Start()
     {
-        var foundPlayer = GameObject.FindWithTag("Player");
-        if (foundPlayer != null)
-            player = foundPlayer.transform;
-        else
-            Debug.LogError("Player not found! Ensure your player has tag 'Player'");
+        myId = gameObject.GetInstanceID();
+
+        var p = GameObject.FindWithTag("Player");
+        if (p == null) { Debug.LogError("Player not found (tag 'Player')."); enabled = false; return; }
+        player = p.transform;
+
+        if (PlayerOrbitTargets.Instance != null)
+        {
+            mySlotIndex = PlayerOrbitTargets.Instance.ClaimSlot(myId, preferBehind: true);
+            orbitTarget = PlayerOrbitTargets.Instance.GetSlotTransform(mySlotIndex);
+        }
+
+        mover = GetComponent<EnemyPathMover>();
+        if (mover == null) mover = gameObject.AddComponent<EnemyPathMover>();
+        mover.maxSpeed = moveSpeed;
+
+        if (mover.nav == null) mover.nav = FindObjectOfType<NavGrid2D>();
+        if (mover.nav != null && mover.obstacleMask.value == 0) mover.obstacleMask = mover.nav.obstacleMask;
+    }
+
+    void OnDestroy()
+    {
+        if (PlayerOrbitTargets.Instance != null && mySlotIndex >= 0)
+            PlayerOrbitTargets.Instance.ReleaseSlot(mySlotIndex, myId);
     }
 
     void Update()
     {
         if (player == null) return;
+
         float distToPlayer = Vector2.Distance(transform.position, player.position);
+        bool hasLOSPlayer = (losObstacleMask.value == 0) ? true : !Physics2D.Linecast(transform.position, player.position, losObstacleMask);
 
         FacePlayer2D();
 
         switch (state)
         {
             case State.Idle:
-                if (distToPlayer <= viewRadius)
-                    state = State.Chase;
+                if (distToPlayer <= viewRadius) state = State.Flank;
                 break;
-            case State.Chase:
-                if (distToPlayer > viewRadius)
+
+            case State.Flank:
                 {
-                    state = State.Idle;
-                    RemoveAttackZone();
+                    // Если слот «по другую сторону стены» от игрока — игнорируем слот и идём к игроку
+                    bool slotValid = IsSlotValid();
+                    Vector3 dst = slotValid && orbitTarget != null ? orbitTarget.position : player.position;
+
+                    mover.SetDestination(dst);
+
+                    if (CanStartApproach(hasLOSPlayer, slotValid))
+                    {
+                        state = State.Approach; approachUntil = Time.time + approachCommitTime;
+                    }
+                    else if (distToPlayer <= stopDistance)
+                    {
+                        state = State.Attack;
+                    }
+                    break;
                 }
-                else if (distToPlayer > stopDistance)
-                {
-                    MoveTowardsPlayer();
-                    RemoveAttackZone();
-                }
-                else
-                {
-                    state = State.Attack;
-                }
+
+            case State.Approach:
+                mover.SetDestination(player.position);  // фиксированный заход
+                if (distToPlayer <= stopDistance) { state = State.Attack; }
+                else if (Time.time >= approachUntil) { state = State.Flank; }
                 break;
+
             case State.Attack:
-                if (distToPlayer > stopDistance)
-                {
-                    state = State.Chase;
-                    RemoveAttackZone();
-                }
-                else
-                {
-                    CreateAttackZone();
-                    if (canAttack)
-                        StartCoroutine(Attack());
-                }
+                if (distToPlayer > stopDistance * 1.1f) { RemoveAttackZone(); state = State.Flank; }
+                else { CreateAttackZone(); if (canAttack) StartCoroutine(AttackRoutine()); }
                 break;
         }
 
-        // Если зона атаки есть — она всегда следует за врагом!
-        UpdateAttackZonePosition();
+        UpdateAttackZoneTransform();
     }
 
-    void MoveTowardsPlayer()
+    bool CanStartApproach(bool hasLOSToPlayer, bool slotValid)
     {
-        Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-        transform.position += (Vector3)dir * moveSpeed * Time.deltaTime;
+        // если слота нет или он невалиден (за стеной от игрока) — решение только по LOS/дистанции
+        if (orbitTarget == null || !slotValid)
+            return !requireLOSForApproach || hasLOSToPlayer;
+
+        float dSlot = Vector2.Distance(transform.position, orbitTarget.position);
+        if (dSlot > approachEnterSlotDistance) return false;
+
+        float aEnemy = AngleFrom(player.position, transform.position);
+        float aSlot = AngleFrom(player.position, orbitTarget.position);
+        float delta = Mathf.Abs(Mathf.DeltaAngle(aEnemy, aSlot));
+        if (delta > approachAlignAngleDeg) return false;
+
+        if (requireLOSForApproach && !hasLOSToPlayer) return false;
+        return true;
     }
+
+    // слот валиден, если линия Игрок→Слот НЕ пересекает стены
+    bool IsSlotValid()
+    {
+        if (orbitTarget == null) return false;
+        if (losObstacleMask.value == 0) return true;
+        return !Physics2D.Linecast(player.position, orbitTarget.position, losObstacleMask);
+    }
+
+    static float AngleFrom(Vector2 center, Vector2 point)
+        => Mathf.Atan2(point.y - center.y, point.x - center.x) * Mathf.Rad2Deg;
 
     void FacePlayer2D()
     {
-        if (player == null) return;
-        Vector3 scale = transform.localScale;
-        if (player.position.x > transform.position.x)
-            scale.x = Mathf.Abs(scale.x); // вправо
-        else
-            scale.x = -Mathf.Abs(scale.x); // влево
-        transform.localScale = scale;
+        var s = transform.localScale;
+        s.x = (player.position.x >= transform.position.x) ? Mathf.Abs(s.x) : -Mathf.Abs(s.x);
+        transform.localScale = s;
     }
 
+    // --- атака как прежде ---
     void CreateAttackZone()
     {
-        if (currentAttackZone == null && attackZonePrefab != null)
+        if (currentAttackZone != null || attackZonePrefab == null || player == null) return;
+
+        Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        Vector2 pos = (Vector2)transform.position + dir * attackZoneOffset;
+
+        currentAttackZone = Instantiate(
+            attackZonePrefab,
+            new Vector3(pos.x, pos.y, transform.position.z),
+            Quaternion.identity
+        );
+
+        var az = currentAttackZone.GetComponent<EnemyAttackZone>();
+        if (az != null)
         {
-            Vector2 direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
-            Vector2 spawnPos = (Vector2)transform.position + direction * attackZoneOffset;
-
-            currentAttackZone = Instantiate(
-                attackZonePrefab,
-                new Vector3(spawnPos.x, spawnPos.y, transform.position.z),
-                Quaternion.identity
-            );
-
-            // Настроим параметры зоны:
-            var attackZone = currentAttackZone.GetComponent<EnemyAttackZone>();
-            attackZone.damage = damage;
-            attackZone.enemy = this;
-            attackZone.SetEnemyReference(this);
+            az.damage = damage;
+            az.SetEnemyReference(this);
         }
     }
 
     void RemoveAttackZone()
     {
-        if (currentAttackZone != null)
-        {
-            Destroy(currentAttackZone);
-            currentAttackZone = null;
-        }
+        if (currentAttackZone == null) return;
+        Destroy(currentAttackZone);
+        currentAttackZone = null;
     }
 
-    void UpdateAttackZonePosition()
+    void UpdateAttackZoneTransform()
     {
-        if (currentAttackZone != null && player != null)
-        {
-            Vector2 direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
-            Vector2 offsetPos = (Vector2)transform.position + direction * attackZoneOffset;
-            currentAttackZone.transform.position = new Vector3(offsetPos.x, offsetPos.y, transform.position.z);
+        if (currentAttackZone == null || player == null) return;
 
-            // Можно повернуть визуал зоны, если это нужно:
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            currentAttackZone.transform.rotation = Quaternion.Euler(0, 0, angle);
-        }
+        Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+        Vector2 pos = (Vector2)transform.position + dir * attackZoneOffset;
+
+        currentAttackZone.transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        currentAttackZone.transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
     }
 
-    System.Collections.IEnumerator Attack()
+    IEnumerator AttackRoutine()
     {
         canAttack = false;
-        // (урон игроку — через EnemyAttackZone.cs)
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
     }
 
+
     void OnDrawGizmosSelected()
     {
         if (!drawGizmos) return;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stopDistance);
-
-        if (player != null)
+        Gizmos.color = Color.yellow; Gizmos.DrawWireSphere(transform.position, viewRadius);
+        Gizmos.color = Color.red; Gizmos.DrawWireSphere(transform.position, stopDistance);
+        if (orbitTarget != null)
         {
-            Vector2 direction = ((Vector2)player.position - (Vector2)transform.position).normalized;
-            Vector2 spawnPos = (Vector2)transform.position + direction * attackZoneOffset;
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(new Vector3(spawnPos.x, spawnPos.y, transform.position.z), 0.15f);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(transform.position, orbitTarget.position);
+            Gizmos.DrawSphere(orbitTarget.position, 0.08f);
         }
     }
 }
