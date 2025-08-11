@@ -1,21 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// Вращающееся кольцо слотов вокруг игрока (как в видео).
-/// Враги занимают слот и идут к нему (не напрямую к игроку).
+/// Кольцо слотов вокруг игрока, как в рефе, + "дыхание" радиуса:
+/// слоты плавно двигаются ближе/дальше, каждый — со своей фазой.
+/// Враги занимают слоты и идут к НИМ, а не прямо к игроку.
 [DisallowMultipleComponent]
 public class PlayerOrbitTargets : MonoBehaviour
 {
     public static PlayerOrbitTargets Instance { get; private set; }
 
-    [Header("Ring")]
+    [Header("Ring (угол/вращение)")]
     [Min(2)] public int slots = 12;
-    public float radius = 3.0f;
     public float spinDegPerSec = 60f;
     public float startAngleDeg = 0f;
-    public bool randomizePhasePerSlot = false;
 
-    [Header("Bias (опционально)")]
+    [Header("Радиус")]
+    [Tooltip("Средний радиус кольца.")]
+    public float radius = 3.0f;
+    [Tooltip("Амплитуда дыхания: фактический радиус = radius ± radialAmplitude.")]
+    [Min(0f)] public float radialAmplitude = 1.0f;
+    [Tooltip("Скорость дыхания (циклов в секунду).")]
+    [Min(0f)] public float radialBreathHz = 0.6f;
+    [Tooltip("Разброс фазы дыхания между слотами, в градусах (0 = синхронно).")]
+    [Range(0f, 360f)] public float perSlotPhaseJitterDeg = 180f;
+    [Tooltip("Случайная поправка амплитуды для каждого слота (±%).")]
+    [Range(0f, 1f)] public float perSlotAmplitudeJitter = 0.25f;
+    [Tooltip("Минимальный радиус, чтобы точки не залетали прямо в игрока.")]
+    public float minSafeRadius = 0.8f;
+
+    [Header("Смещение от направления движения игрока (как в видео)")]
     [Range(0f, 360f)] public float behindSectorWidth = 180f;
     [Range(0f, 2f)] public float behindBias = 1.2f;
 
@@ -23,14 +36,19 @@ public class PlayerOrbitTargets : MonoBehaviour
     public bool drawRing = true;
     public bool drawSlots = true;
     public float gizmoSize = 0.12f;
+    public Color ringColor = new Color(0.25f, 0.9f, 1f, 0.35f);
+    public Color slotColor = Color.cyan;
 
+    // runtime
     readonly List<Transform> _points = new();
-    readonly List<float> _baseAngles = new();
+    readonly List<float> _baseAngles = new();     // базовые углы слотов (без фазы вращения)
+    readonly List<float> _phaseJitter = new();    // фаза дыхания слота (рад)
+    readonly List<float> _ampMul = new();         // множитель амплитуды для слота
     int?[] _owners;
 
     Vector3 _prevPos;
     Vector2 _heading = Vector2.right;
-    float _phase;
+    float _spinPhaseDeg;   // фаза вращения (градусы)
 
     void Awake()
     {
@@ -39,6 +57,9 @@ public class PlayerOrbitTargets : MonoBehaviour
         slots = Mathf.Max(2, slots);
         _owners = new int?[slots];
 
+        _points.Clear(); _baseAngles.Clear(); _phaseJitter.Clear(); _ampMul.Clear();
+
+        var pr = Mathf.Clamp01(perSlotAmplitudeJitter);
         for (int i = 0; i < slots; i++)
         {
             var t = new GameObject($"OrbitSlot_{i}").transform;
@@ -46,43 +67,67 @@ public class PlayerOrbitTargets : MonoBehaviour
             _points.Add(t);
 
             float a = startAngleDeg + (360f / slots) * i;
-            if (randomizePhasePerSlot) a += Random.Range(0f, 360f);
             _baseAngles.Add(a);
+
+            // случайная фаза (в радианах) и амплитуда на слот
+            float phaseOff = Random.Range(-perSlotPhaseJitterDeg * 0.5f, perSlotPhaseJitterDeg * 0.5f) * Mathf.Deg2Rad;
+            _phaseJitter.Add(phaseOff);
+
+            float ampMul = 1f + Random.Range(-pr, pr);
+            _ampMul.Add(ampMul);
         }
 
         _prevPos = transform.position;
-        UpdateSlotPositions();
+        UpdateSlotPositions(0f);
     }
 
     void Update()
     {
+        // направление движения игрока — для «захода сзади» (bias)
         var pos = transform.position;
         var v = pos - _prevPos;
         if (v.sqrMagnitude > 0.0001f) _heading = ((Vector2)v).normalized;
         _prevPos = pos;
 
-        _phase = Mathf.Repeat(_phase + spinDegPerSec * Time.deltaTime, 360f);
-        UpdateSlotPositions();
+        // фазы
+        _spinPhaseDeg = Mathf.Repeat(_spinPhaseDeg + spinDegPerSec * Time.deltaTime, 360f);
+        float t = Time.time; // для дыхания
+
+        UpdateSlotPositions(t);
     }
 
-    void UpdateSlotPositions()
+    void UpdateSlotPositions(float t)
     {
+        // дышащий радиус
+        float w = Mathf.PI * 2f * Mathf.Max(0f, radialBreathHz);
+
         for (int i = 0; i < _points.Count; i++)
         {
-            float ang = Mathf.Repeat(_baseAngles[i] + _phase, 360f) * Mathf.Deg2Rad;
-            var off = new Vector3(Mathf.Cos(ang), Mathf.Sin(ang), 0f) * radius;
+            // угол с вращением
+            float angDeg = Mathf.Repeat(_baseAngles[i] + _spinPhaseDeg, 360f);
+            float angRad = angDeg * Mathf.Deg2Rad;
+
+            // дыхание этого слота
+            float breath = Mathf.Sin(w * t + _phaseJitter[i]);
+            float r = radius + radialAmplitude * _ampMul[i] * breath;
+            r = Mathf.Max(minSafeRadius, r);
+
+            Vector3 off = new Vector3(Mathf.Cos(angRad), Mathf.Sin(angRad), 0f) * r;
             _points[i].position = transform.position + off;
         }
     }
 
-    // ===== API =====
+    // ======== API для врагов ========
 
+    /// Закрепить слот за врагом. Возвращает индекс слота.
     public int ClaimSlot(int requesterInstanceId, bool preferBehind = true)
     {
+        // уже есть слот?
         for (int i = 0; i < _owners.Length; i++)
             if (_owners[i].HasValue && _owners[i].Value == requesterInstanceId)
                 return i;
 
+        // свободные
         List<int> free = new();
         for (int i = 0; i < _owners.Length; i++)
             if (!_owners[i].HasValue) free.Add(i);
@@ -97,13 +142,13 @@ public class PlayerOrbitTargets : MonoBehaviour
             float behindCenter = Mathf.Repeat(head + 180f, 360f);
 
             float bestScore = float.PositiveInfinity;
-            foreach (var i in free)
+            foreach (var idx in free)
             {
-                float slotAng = Mathf.Repeat(_baseAngles[i] + _phase, 360f);
+                float slotAng = Mathf.Repeat(_baseAngles[idx] + _spinPhaseDeg, 360f);
                 float d = Mathf.Abs(Mathf.DeltaAngle(slotAng, behindCenter));
                 float inside = Mathf.InverseLerp(behindSectorWidth * 0.5f, 0f, d);
                 float score = d / Mathf.Max(0.001f, (1f + inside * (behindBias - 1f)));
-                if (score < bestScore) { bestScore = score; best = i; }
+                if (score < bestScore) { bestScore = score; best = idx; }
             }
         }
 
@@ -124,11 +169,12 @@ public class PlayerOrbitTargets : MonoBehaviour
         return _points[slotIndex];
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmos()
     {
         if (drawRing)
         {
-            Gizmos.color = new Color(0.25f, 0.9f, 1f, 0.35f);
+            Gizmos.color = ringColor;
             const int segs = 64;
             Vector3 prev = Vector3.zero;
             for (int i = 0; i <= segs; i++)
@@ -140,14 +186,12 @@ public class PlayerOrbitTargets : MonoBehaviour
             }
         }
 
-        if (!drawSlots) return;
-        Gizmos.color = Color.cyan;
-        int N = Mathf.Max(2, slots);
-        for (int i = 0; i < N; i++)
+        if (!drawSlots || !Application.isPlaying) return;
+        Gizmos.color = slotColor;
+        for (int i = 0; i < _points.Count; i++)
         {
-            float a = startAngleDeg + (360f / N) * i;
-            Vector3 p = transform.position + Quaternion.Euler(0, 0, a) * Vector3.right * radius;
-            Gizmos.DrawSphere(p, gizmoSize);
+            if (_points[i]) Gizmos.DrawSphere(_points[i].position, gizmoSize);
         }
     }
+#endif
 }
