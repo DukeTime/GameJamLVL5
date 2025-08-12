@@ -21,10 +21,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(GlobalGameController.CutsceneFreezed);
         if (!GlobalGameController.CutsceneFreezed)
         {
-            Debug.Log(1);
             MovementInput = new Vector2(
                 Input.GetAxisRaw("Horizontal"),
                 Input.GetAxisRaw("Vertical")
@@ -38,11 +36,11 @@ public class PlayerInputHandler : MonoBehaviour
 
             if (_interactEnabled)
             {
-                Debug.Log(2);
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    Debug.Log(3);
                     InteractNpc?.Invoke();
+                    NpcZoneExit?.Invoke();
+                    
                     _selectedNpc.Interact();
                 }
             }
@@ -56,9 +54,12 @@ public class PlayerInputHandler : MonoBehaviour
         switch (go.tag)
         {
             case "NPC":
-                _interactEnabled = true;
                 _selectedNpc = go.GetComponent<NpcController>();
-                NpcZoneEntered?.Invoke();
+                if (!_selectedNpc.interacted)
+                {
+                    _interactEnabled = true;
+                    NpcZoneEntered?.Invoke();
+                }
                 break;
         }
     }

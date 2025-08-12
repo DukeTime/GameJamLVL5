@@ -52,7 +52,7 @@ namespace FastScriptReload.Examples
             p.x = u;
             p.y = Sin(PI * (4f * d - t));
             p.y /= 1f + 10f * d;   
-            p.z = v * 100;
+            p.z = v * 1;
             return p;
         }
 

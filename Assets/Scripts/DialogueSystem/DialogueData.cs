@@ -19,7 +19,7 @@ public class DialogData
 
 
 [CreateAssetMenu(fileName = "NewCharacter", menuName = "Dialogue System/Character Data")]
-public class CharacterData : ScriptableObject
+public class CharacterData: ScriptableObject
 {
     public string characterId;
     public string displayName;

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
   m_Name: Somebody
-  m_EditorClassIdentifier: Assembly-CSharp:DefaultNamespace.DialogueSystem:CharacterData
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   characterId: Somebody
   displayName: "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
   defaultPortrait: {fileID: -7535119028740663200, guid: 01ebbf570b145514cbf7073b659988c7, type: 3}
