@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
     public int health = 100;
+    
+    public Action OnHpIsGone;
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        Debug.Log($"Игрок получил {damage} урона! Осталось здоровья: {health}");
-        // Тут логика смерти или эффектов
+        if (health <= 0)
+        {
+            health = 0;
+            OnHpIsGone?.Invoke();
+        }
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     }
 }

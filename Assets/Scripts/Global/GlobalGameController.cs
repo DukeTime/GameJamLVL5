@@ -1,24 +1,49 @@
-public static class GlobalGameController
-{
-    public static bool Paused { get; private set; } = false;
-    public static bool CutsceneFreezed { get; private set; } = false;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-    public static void Pause()
+public class GlobalGameController : MonoBehaviour
+{
+    public static GlobalGameController Instance;
+
+    public int sceneProgress = 1;
+    public bool Paused { get; private set; } = false;
+    public bool CutsceneFreezed { get; private set; } = false;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+    
+    public IEnumerator LoadScene(string sceneName)
+    {
+        yield return StartCoroutine(ViewManager.Instance.FadeIn());
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void Pause()
     {
         Paused = true;
     }
     
-    public static void Unpause()
+    public void Unpause()
     {
         Paused = false;
     }
     
-    public static void CutsceneFreeze()
+    public void CutsceneFreeze()
     {
         CutsceneFreezed = true;
     }
     
-    public static void CutsceneUnfreeze()
+    public void CutsceneUnfreeze()
     {
         CutsceneFreezed = false;
     }

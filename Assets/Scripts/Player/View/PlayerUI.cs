@@ -7,11 +7,11 @@ public class PlayerUI : MonoBehaviour
 
     public void ShowInteractBtn()
     {
-        animator.SetTrigger("ShowInteractBtn");
+        animator.SetBool("InZone", true);
     }
     
     public void HideInteractBtn()
     {
-        animator.SetTrigger("HideInteractBtn");
+        animator.SetBool("InZone", false);
     }
 }

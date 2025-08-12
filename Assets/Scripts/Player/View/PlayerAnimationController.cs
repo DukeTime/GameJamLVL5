@@ -12,6 +12,14 @@ public class PlayerAnimationController : MonoBehaviour
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private static readonly int IsRunning = Animator.StringToHash("IsRunning");
 
+    public Transform playerTransform;
+        
+    // Расстояние для определения "значительного" смещения
+    public float significantDistance = 1f;
+
+    // Переменная для хранения результата сравнения
+    [SerializeField] private float comparisonResult;
+    
     private void Awake()
     {
         //_animator = GetComponent<Animator>();
@@ -25,10 +33,37 @@ public class PlayerAnimationController : MonoBehaviour
         _animator.SetBool(IsMoving, isMoving);
         _animator.SetBool(IsRunning, _input.IsRunning);
         
-        if (isMoving)
+        //if (isMoving)
+        //{
+        _animator.SetFloat(MoveX, comparisonResult);//_input.MovementInput.x);
+        _animator.SetFloat(MoveY, _input.MovementInput.y);
+        //}
+    }
+    
+
+    void Update()
+    {
+        UpdateAnimationParameters();
+        // Получаем позицию мыши в мировых координатах
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0; // Обнуляем Z, так как мы работаем в 2D
+
+        // Вычисляем разницу по X между мышью и игроком
+        float xDifference = mousePosition.x - playerTransform.position.x;
+
+        // Определяем значение comparisonResult в соответствии с условиями
+        if (xDifference > significantDistance)
         {
-            _animator.SetFloat(MoveX, _input.MovementInput.x);
-            _animator.SetFloat(MoveY, _input.MovementInput.y);
+            comparisonResult = 1f;
+        }
+        else if (xDifference < -significantDistance)
+        {
+            comparisonResult = -1f;
+        }
+        else
+        {
+            // Нормализуем разницу в диапазоне [-1, 1] для незначительных смещений
+            comparisonResult = Mathf.Clamp(xDifference / significantDistance, -1f, 1f);
         }
     }
 }

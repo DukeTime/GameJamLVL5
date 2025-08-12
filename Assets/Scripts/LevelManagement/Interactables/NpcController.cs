@@ -17,7 +17,7 @@ public class NpcController : Interactable
     
     public override void Interact()
     {
-        if (interacted)
+        if (!interacted)
         {
             DialogSystem.Instance.LoadDialog(dialogue);
             interacted = true;
