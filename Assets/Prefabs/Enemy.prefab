@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 16.88, y: 16.88, z: 16.88}
+  m_LocalScale: {x: 29.5, y: 29.5, z: 29.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7611870376825288095}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -103,15 +103,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 1387799159293524961}
   walk:
-  - {fileID: 5631415308695899121, guid: 1daf601b38dcedf45bacac9c976771ca, type: 3}
-  - {fileID: 8137282870481675052, guid: 2db042e7811fa974194c8c483155eb06, type: 3}
-  - {fileID: -7325015081676323044, guid: a6438c67f192df54eab49958f757ef4d, type: 3}
-  - {fileID: -4076866897476796393, guid: 2a0e8d3e41a03974984847ab7c5bf590, type: 3}
+  - {fileID: 7145198348311737387, guid: 238a902c650212a4882b7fb5f35699a0, type: 3}
+  - {fileID: 1768679433190182986, guid: f9c4df966f798164c96a7b7a9bf89764, type: 3}
+  - {fileID: -4885373251318296212, guid: ff6f355e6e6ce6640a56c9b5cddaa6a2, type: 3}
   attack:
-  - {fileID: 2911070366931775019, guid: ba33e97aa2e90fa41b8c6c5b598c483b, type: 3}
-  - {fileID: 5160684801720848237, guid: b0253be8c01becf4a9c2e41b08fd251a, type: 3}
-  - {fileID: 5456576242102492365, guid: f5f09f864368d7647b7a89fb97bab720, type: 3}
-  - {fileID: 498295922471950275, guid: b1c89b9a124b48b40903824d73a43080, type: 3}
+  - {fileID: 7473920403424214205, guid: 0142fee38a45f4943a34cb8955f34c6c, type: 3}
+  - {fileID: 2777155613528391074, guid: e3f00cb7f8df143498a6469090191947, type: 3}
+  - {fileID: 641515894465698295, guid: 193fb8278a2229745a5a1371cc479694, type: 3}
+  - {fileID: 8725218637780951959, guid: aa0baff4707d6e24fa947ebbefa7585c, type: 3}
   walkFps: 6
   attackFps: 10
   dashWindupTint: {r: 1, g: 0.3, b: 0.3, a: 1}
@@ -205,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8100b878b71516840b6e85fdd42f678c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 10
+  viewRadius: 25
   moveSpeed: 3
   approachEnterSlotDistance: 0.35
   approachAlignAngleDeg: 30
@@ -219,24 +218,28 @@ MonoBehaviour:
   wanderPointTolerance: 0.2
   attackKindOnSpawn: 0
   chooseRandomKindWeights: {x: 0.7, y: 0.3}
-  attackTriggerDistance: 2.6
   attackCooldown: 1.5
-  damage: 10
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   classicWindup: 1.2
-  classicHitRadius: 1.1
+  classicHitRadius: 2
   classicHitOffset: 0.8
   classicDamage: 10
   classicKnockback: 6
+  classicAttackTriggerDistance: 1.25
+  classicStopDistance: 1
+  classicSlotIgnoreDistance: 1.6
   dashWindup: 1
-  dashDistance: 4
+  dashDistance: 5
   dashDuration: 0.22
   dashHitRadius: 0.6
   dashDamage: 12
   dashKnockback: 8
   dashStopOnWall: 1
+  dashAttackTriggerDistance: 3
+  dashStopDistance: 2.4
+  dashSlotIgnoreDistance: 2.6
   vfxWindup: {fileID: 0}
   vfxHit: {fileID: 0}
   vfxDashTrail: {fileID: 0}

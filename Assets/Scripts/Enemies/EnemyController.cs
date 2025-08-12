@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 /// Поведение: бродит → флангует к слоту → заход → атака (Classic/Dash).
-/// Для Classic теперь подходим БЛИЖЕ (персональные дистанции), в конце игнорим слот и берём прямую.
+/// Classic: ближний заход — на финальном участке игнорим слот и целимся прямо в игрока.
 [RequireComponent(typeof(EnemyPathMover))]
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyController : MonoBehaviour
@@ -54,6 +54,7 @@ public class EnemyController : MonoBehaviour
     public float dashDistance = 4.0f;
     public float dashDuration = 0.22f;
     public float dashHitRadius = 0.60f;
+    [Tooltip("Используется ТОЛЬКО если dashSingleHit=false (мульти-тики).")]
     public int dashDamage = 12;
     public float dashKnockback = 8f;
     public bool dashStopOnWall = true;
@@ -64,10 +65,16 @@ public class EnemyController : MonoBehaviour
     [Tooltip("Для рывка слоты можно не игнорить так рано.")]
     public float dashSlotIgnoreDistance = 2.6f;
 
+    [Header("Dash damage control")]
+    [Tooltip("Если включено — рывок нанесёт урон максимум один раз за рывок.")]
+    public bool dashSingleHit = true;
+    [Tooltip("Сколько урона нанести при однократном ударе рывком.")]
+    public int dashSingleHitDamage = 20;
+
     [Header("VFX (опционально)")]
-    public GameObject vfxWindup;                   // частицы на телеграф
-    public GameObject vfxHit;                      // вспышка в момент удара/попадания
-    public GameObject vfxDashTrail;                // след во время рывка
+    public GameObject vfxWindup;                   // телеграф (не обяз.)
+    public GameObject vfxHit;                      // вспышка удара (не обяз.)
+    public GameObject vfxDashTrail;                // след рывка (не обяз.)
 
     [Header("Sprites")]
     public EnemySpriteAnimator anim;
@@ -80,6 +87,9 @@ public class EnemyController : MonoBehaviour
     EnemyPathMover mover;
     Rigidbody2D rb;
     Transform orbitTarget; int mySlotIndex = -1; int myId;
+
+    // Фолбэк, если аниматор не назначен
+    SpriteRenderer srFallback;
 
     // Wander
     Vector2 spawnOrigin, wanderPoint; float nextWanderPickAt;
@@ -125,6 +135,8 @@ public class EnemyController : MonoBehaviour
         ApplyAttackTuning();
 
         if (!anim) anim = GetComponentInChildren<EnemySpriteAnimator>();
+        if (!anim) srFallback = GetComponentInChildren<SpriteRenderer>();
+
         if (anim) anim.PlayWalkLoop();
     }
 
@@ -157,7 +169,7 @@ public class EnemyController : MonoBehaviour
         float distToPlayer = Vector2.Distance(transform.position, player.position);
         bool hasLOSPlayer = (losObstacleMask.value == 0) ? true : !Physics2D.Linecast(transform.position, player.position, losObstacleMask);
 
-        FaceByPlayerX();
+        FaceByPlayerX(); // поворот к игроку
 
         switch (state)
         {
@@ -173,14 +185,9 @@ public class EnemyController : MonoBehaviour
                     // Куда бежим: слот или прямо в игрока?
                     Vector3 dst;
                     if (attackKindOnSpawn == AttackKind.Classic && distToPlayer <= curSlotIgnoreDistance)
-                    {
-                        // Ближний бой — финальный участок идём прямо к игроку
                         dst = player.position;
-                    }
                     else
-                    {
                         dst = (slotValid && orbitTarget != null) ? orbitTarget.position : player.position;
-                    }
 
                     mover.enabled = true;
                     mover.SetDestination(dst);
@@ -191,7 +198,8 @@ public class EnemyController : MonoBehaviour
                     }
                     else if (CanStartApproach(hasLOSPlayer, slotValid))
                     {
-                        state = State.Approach; approachUntil = Time.time + approachCommitTime;
+                        state = State.Approach;
+                        approachUntil = Time.time + approachCommitTime;
                     }
                     break;
                 }
@@ -206,7 +214,6 @@ public class EnemyController : MonoBehaviour
             case State.Windup:
             case State.Execute:
             case State.Recover:
-                // управление движением идёт через корутины атаки — здесь ничего
                 break;
         }
     }
@@ -258,8 +265,6 @@ public class EnemyController : MonoBehaviour
 
         DoDamageCircle(hitPos, classicHitRadius, classicDamage, classicKnockback, dir);
 
-        if (vfxHit) Instantiate(vfxHit, hitPos, Quaternion.identity);
-
         // Recover
         state = State.Recover;
         yield return new WaitForSeconds(attackCooldown);
@@ -287,6 +292,9 @@ public class EnemyController : MonoBehaviour
         GameObject trail = null;
         if (vfxDashTrail) trail = Instantiate(vfxDashTrail, transform.position, Quaternion.identity);
 
+        bool dashDidHit = false;
+        Vector2 prev = rb.position;
+
         while (t < dashDuration)
         {
             t += Time.fixedDeltaTime;
@@ -297,10 +305,20 @@ public class EnemyController : MonoBehaviour
             if (dashStopOnWall && Physics2D.Linecast(rb.position, next, mover.obstacleMask))
                 break;
 
-            rb.MovePosition(next);
+            // --- свип-урон между prev и next (без туннелинга) ---
+            if (dashSingleHit)
+            {
+                if (!dashDidHit)
+                    dashDidHit = TryDamageSweep(prev, next, dashHitRadius, dashSingleHitDamage, dashKnockback);
+            }
+            else
+            {
+                DoDamageCircle(next, dashHitRadius, dashDamage, dashKnockback, cachedDashDir);
+            }
 
-            // активный хитбокс
-            DoDamageCircle(next, dashHitRadius, dashDamage, dashKnockback, cachedDashDir);
+            // двигаем тело после свип-проверки
+            rb.MovePosition(next);
+            prev = next;
 
             yield return new WaitForFixedUpdate();
         }
@@ -323,17 +341,72 @@ public class EnemyController : MonoBehaviour
         var hits = Physics2D.OverlapCircleAll(center, radius);
         foreach (var h in hits)
         {
-            bool isPlayer = (playerMask.value != 0) ? ((playerMask.value & (1 << h.gameObject.layer)) != 0)
-                                                    : h.CompareTag("Player");
+            bool isPlayer = (playerMask.value != 0)
+                ? ((playerMask.value & (1 << h.gameObject.layer)) != 0)
+                : h.CompareTag("Player");
             if (!isPlayer) continue;
 
-            h.SendMessage("TakeDamage", dmg, SendMessageOptions.DontRequireReceiver);
+            // Надёжно ищем здоровье на объекте или у родителей
+            var health = h.GetComponentInParent<PlayerHealth>();
+            if (health != null) health.TakeDamage(dmg);
+            else h.SendMessage("TakeDamage", dmg, SendMessageOptions.DontRequireReceiver);
 
-            var prb = h.attachedRigidbody;
+            var prb = h.attachedRigidbody ?? h.GetComponentInParent<Rigidbody2D>();
             if (prb) prb.AddForce(fromDir.normalized * knockback, ForceMode2D.Impulse);
         }
-
         attackCooling = true;
+    }
+
+    bool TryDamageOnce(Vector2 center, float radius, int dmg, float knockback, Vector2 fromDir)
+    {
+        var hits = Physics2D.OverlapCircleAll(center, radius);
+        foreach (var h in hits)
+        {
+            bool isPlayer = (playerMask.value != 0)
+                ? ((playerMask.value & (1 << h.gameObject.layer)) != 0)
+                : h.CompareTag("Player");
+            if (!isPlayer) continue;
+
+            var health = h.GetComponentInParent<PlayerHealth>();
+            if (health != null) health.TakeDamage(dmg);
+            else h.SendMessage("TakeDamage", dmg, SendMessageOptions.DontRequireReceiver);
+
+            var prb = h.attachedRigidbody ?? h.GetComponentInParent<Rigidbody2D>();
+            if (prb) prb.AddForce(fromDir.normalized * knockback, ForceMode2D.Impulse);
+
+            attackCooling = true;
+            return true; // ударили один раз
+        }
+        return false;
+    }
+
+    // Свип-проверка урона по отрезку (для рывка)
+    bool TryDamageSweep(Vector2 from, Vector2 to, float radius, int dmg, float knockback)
+    {
+        Vector2 dir = to - from;
+        float dist = dir.magnitude;
+        if (dist < 0.0001f) return false;
+        dir /= dist;
+
+        int mask = (playerMask.value != 0) ? playerMask.value : Physics2D.DefaultRaycastLayers;
+
+        var hits = Physics2D.CircleCastAll(from, radius, dir, dist, mask);
+        foreach (var hit in hits)
+        {
+            var col = hit.collider;
+            if (playerMask.value == 0 && !col.CompareTag("Player")) continue;
+
+            var health = col.GetComponentInParent<PlayerHealth>();
+            if (health != null) health.TakeDamage(dmg);
+            else col.SendMessage("TakeDamage", dmg, SendMessageOptions.DontRequireReceiver);
+
+            var prb = col.attachedRigidbody ?? col.GetComponentInParent<Rigidbody2D>();
+            if (prb) prb.AddForce(dir * knockback, ForceMode2D.Impulse);
+
+            attackCooling = true;
+            return true;
+        }
+        return false;
     }
 
     // ===== Helpers =====
@@ -363,9 +436,19 @@ public class EnemyController : MonoBehaviour
 
     void FaceByPlayerX()
     {
-        if (!anim) return;
         float sign = (player.position.x >= transform.position.x) ? 1f : -1f;
-        anim.FaceDir(sign);
+
+        if (anim != null)
+        {
+            anim.FaceDir(sign);
+        }
+        else if (srFallback != null)
+        {
+            var s = srFallback.transform.localScale;
+            s.x = Mathf.Abs(s.x) * (sign >= 0f ? 1f : -1f);
+            srFallback.transform.localScale = s;
+        }
+        // root не трогаем
     }
 
     static float AngleFrom(Vector2 center, Vector2 point)
