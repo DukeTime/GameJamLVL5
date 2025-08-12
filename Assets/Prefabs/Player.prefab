@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4375874047560838936}
   - component: {fileID: 8654102089016329930}
   - component: {fileID: 7049137005811724931}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 749945561800932716}
   - component: {fileID: 4469340722189507570}
   - component: {fileID: 7866828661234320749}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -547,16 +547,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af4aa468838184083d0cd87f35dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots: 12
-  radius: 2
-  spinDegPerSec: 60
+  slots: 4
+  spinDegPerSec: 0
   startAngleDeg: 0
-  randomizePhasePerSlot: 0
+  radius: 4
+  radialAmplitude: 1
+  radialBreathHz: 0
+  perSlotPhaseJitterDeg: 180
+  perSlotAmplitudeJitter: 0.25
+  minSafeRadius: 0.8
   behindSectorWidth: 180
   behindBias: 1.2
   drawRing: 1
   drawSlots: 1
   gizmoSize: 0.12
+  ringColor: {r: 0.25, g: 0.9, b: 1, a: 0.35}
+  slotColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &4469340722189507570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3824290203105379344}
   - component: {fileID: 6567621039496757561}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +687,7 @@ GameObject:
   - component: {fileID: 5164929358499215676}
   - component: {fileID: 782165953434148324}
   - component: {fileID: 5386851262011305427}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +798,7 @@ GameObject:
   - component: {fileID: 1064855271243505391}
   - component: {fileID: 7973248536705287862}
   - component: {fileID: 7442737673383976155}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 24367545037055760}
   - component: {fileID: 5254222710973086029}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,7 +946,7 @@ GameObject:
   - component: {fileID: 5337410945449433559}
   - component: {fileID: 5162414825933721200}
   - component: {fileID: 7124868695748683518}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ViewV2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1052,7 +1058,7 @@ GameObject:
   - component: {fileID: 8067771407441996984}
   - component: {fileID: 974191136744342766}
   - component: {fileID: 3750256157432261582}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1188,7 +1194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6181444277306839639}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1220,7 +1226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1754736831528323484}
   - component: {fileID: 7021713883117957337}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

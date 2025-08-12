@@ -281,15 +281,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75af4aa468838184083d0cd87f35dd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots: 12
-  radius: 2
+  slots: 8
   spinDegPerSec: 60
   startAngleDeg: 0
+  radius: 1.3
+  radialAmplitude: 0.5
+  radialBreathHz: 0.3
+  perSlotPhaseJitterDeg: 118
+  perSlotAmplitudeJitter: 0.153
+  minSafeRadius: 0.8
   behindSectorWidth: 180
   behindBias: 1.2
   drawRing: 1
   drawSlots: 1
   gizmoSize: 0.12
+  ringColor: {r: 0.25, g: 0.9, b: 1, a: 0.35}
+  slotColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &2720063163690286497
 GameObject:
   m_ObjectHideFlags: 0
