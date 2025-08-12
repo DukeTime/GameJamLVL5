@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 81d765c249304da2a99fc1cab051be97, type: 3}
   m_Name: Player
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  characterId: Player
+  m_EditorClassIdentifier: 
+  characterId: "\u0418\u0433\u0440\u043E\u043A"
   displayName: "\u0418\u0433\u0440\u043E\u043A"
   defaultPortrait: {fileID: -4364844894435047942, guid: 01ebbf570b145514cbf7073b659988c7, type: 3}
-  emotionPortraits:
-  - emotionId: 
-    portrait: {fileID: -4364844894435047942, guid: 01ebbf570b145514cbf7073b659988c7, type: 3}
+  emotionPortraits: []

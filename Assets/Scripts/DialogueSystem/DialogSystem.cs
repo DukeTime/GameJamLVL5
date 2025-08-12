@@ -45,7 +45,7 @@ public class DialogSystem : MonoBehaviour
     {
         LoadFiles(dialogName);
         
-        GlobalGameController.CutsceneFreeze();
+        GlobalGameController.Instance.CutsceneFreeze();
         
         currentPhraseIndex = 0;
         StartCoroutine(DialogueCor());
@@ -123,7 +123,7 @@ public class DialogSystem : MonoBehaviour
         DialogView.Instance.Hide();
         currentDialog = null;
         
-        GlobalGameController.CutsceneUnfreeze();
+        GlobalGameController.Instance.CutsceneUnfreeze();
     }
     
     public CharacterData GetCharacterData(string characterId)

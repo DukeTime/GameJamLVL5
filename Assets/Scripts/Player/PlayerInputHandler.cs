@@ -21,7 +21,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void Update()
     {
-        if (!GlobalGameController.CutsceneFreezed)
+        if (!GlobalGameController.Instance.CutsceneFreezed)
         {
             MovementInput = new Vector2(
                 Input.GetAxisRaw("Horizontal"),

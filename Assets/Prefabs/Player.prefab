@@ -145,6 +145,8 @@ GameObject:
   - component: {fileID: 1337239668035918549}
   - component: {fileID: 1873292536510014463}
   - component: {fileID: 749945561800932716}
+  - component: {fileID: 4469340722189507570}
+  - component: {fileID: 7866828661234320749}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -419,6 +421,32 @@ MonoBehaviour:
   drawRing: 1
   drawSlots: 1
   gizmoSize: 0.12
+--- !u!114 &4469340722189507570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691104930053176123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f53b59aaee833d48b24806b25c6b7f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+--- !u!114 &7866828661234320749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2691104930053176123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5f74802a8f46808d3794c8d08074c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 4469340722189507570}
 --- !u!1 &2720063163690286497
 GameObject:
   m_ObjectHideFlags: 0
