@@ -14,11 +14,6 @@ public class PlayerData: MonoBehaviour
         playerHealth.OnHpIsGone += Die;
     }
 
-    private void FixedUpdate()
-    {
-        playerHealth.TakeDamage(1);
-    }
-
     private void OnDisable()
     {
         playerHealth.OnHpIsGone -= Die;
