@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
+    [SerializeField] private MouseAimController mouseAimController;
     private PlayerInputHandler _input;
 
     // Хэши для оптимизации
@@ -24,6 +25,11 @@ public class PlayerAnimationController : MonoBehaviour
     {
         //_animator = GetComponent<Animator>();
         _input = GetComponent<PlayerInputHandler>();
+    }
+
+    private void Start()
+    {
+        _input.AttackPressed += (() => StartCoroutine(mouseAimController.AttackAnim()));
     }
 
     public void UpdateAnimationParameters()
@@ -52,7 +58,7 @@ public class PlayerAnimationController : MonoBehaviour
         float xDifference = mousePosition.x - playerTransform.position.x;
 
         // Определяем значение comparisonResult в соответствии с условиями
-        if (xDifference > significantDistance)
+        if (xDifference >= significantDistance)
         {
             comparisonResult = 1f;
         }

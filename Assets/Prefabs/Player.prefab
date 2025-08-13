@@ -307,7 +307,7 @@ Transform:
   m_GameObject: {fileID: 2472043041652687224}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.245, z: 0}
+  m_LocalPosition: {x: 0.0003, y: 0.1, z: 0}
   m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -326,8 +326,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4755110e6d6740728b567ffc10ecbe70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FreezeRot: 0
+  attackAnimDelta: 45
+  attackAnimSpeed: 45
+  playerTransform: {fileID: 6585633223345500692}
+  swordTransform: {fileID: 0}
+  significantDistance: 1
+  smoothAiming: 0
+  smoothSpeed: 0.2
+  angleOffset: 0
   flipSpriteBasedOnDirection: 1
-  offset: 0
+  flipByX: 0
+  swordSwap: 0
+  useRotationLimits: 1
+  minLeftAngle: 135
+  maxLeftAngle: 225
+  minRightAngle: 315
+  maxRightAngle: 45
+  comparisonResult: 0
+  currentAngle: 0
+  targetAngle: 0
+  facingRight: 0
+  spriteRenderer: {fileID: 3169104433938466965}
 --- !u!1 &2691104930053176123
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,8 +578,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 7124868695748683518}
+  mouseAimController: {fileID: 5254222710973086029}
   playerTransform: {fileID: 429411781681037097}
-  significantDistance: 1
+  significantDistance: 0
   comparisonResult: 0
 --- !u!114 &813417323141087177
 MonoBehaviour:
@@ -984,7 +1005,7 @@ Transform:
   m_GameObject: {fileID: 4658981447862913728}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.008577136, w: 0.9999632}
-  m_LocalPosition: {x: 0.04, y: 0.17, z: 0}
+  m_LocalPosition: {x: 0.0397, y: 0.0824, z: 0}
   m_LocalScale: {x: 0.16666667, y: 0.16666667, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1003,8 +1024,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4755110e6d6740728b567ffc10ecbe70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flipSpriteBasedOnDirection: 1
-  offset: -90
+  FreezeRot: 0
+  attackAnimDelta: 90
+  attackAnimSpeed: 20
+  playerTransform: {fileID: 24367545037055760}
+  swordTransform: {fileID: 429411781681037097}
+  significantDistance: 1
+  smoothAiming: 0
+  smoothSpeed: 0.5
+  angleOffset: -90
+  flipSpriteBasedOnDirection: 0
+  flipByX: 0
+  swordSwap: 1
+  useRotationLimits: 1
+  minLeftAngle: 0
+  maxLeftAngle: 150
+  minRightAngle: 210
+  maxRightAngle: 360
+  comparisonResult: 1
+  currentAngle: 270.85684
+  targetAngle: 270.85684
+  facingRight: 1
+  spriteRenderer: {fileID: 6567621039496757561}
 --- !u!1 &5420761245883074188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,7 +1073,7 @@ Transform:
   m_GameObject: {fileID: 5420761245883074188}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6591, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1084,11 +1125,11 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7273b607ce01165478f4b5e8fecfa99d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb14df08cd46e51439cf0194072dc3f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 2
+  m_DrawMode: 0
   m_Size: {x: 0.64, y: 0.42030233}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0

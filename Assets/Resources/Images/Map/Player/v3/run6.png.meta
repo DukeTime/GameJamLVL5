@@ -1,7 +1,10 @@
 fileFormatVersion: 2
-guid: c4178131f36695849854e68c3dda98ca
+guid: 44ef2f2df7b46d548bdc4298bee22c90
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -7807447491633730432
+    second: run6_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -43,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -110,45 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: arm_0
+      name: run6_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 32
-        width: 43
-        height: 11
-      alignment: 9
-      pivot: {x: 0.09135748, y: 0.6973648}
+        x: 22
+        y: 10
+        width: 19
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e641fe448c39bb14a9d2889ed0afb89e
-      internalID: 1991021473
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: arm_1
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 41
-        width: 8
-        height: 10
-      alignment: 9
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4a25c9b398a305f49b29616fb0fba348
-      internalID: 1472337163
+      spriteID: 08c28aa3fdf56a390800000000000000
+      internalID: -7807447491633730432
       vertices: []
       indices: 
       edges: []
@@ -157,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1669c525af42bdf48a0ec36ae7614592
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -167,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      arm_0: 1991021473
-      arm_1: 1472337163
+      run6_0: -7807447491633730432
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

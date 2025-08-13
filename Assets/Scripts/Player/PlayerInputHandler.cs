@@ -32,7 +32,10 @@ public class PlayerInputHandler : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
             if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log(3);
                 AttackPressed.Invoke();
+            }
 
             if (_interactEnabled)
             {
