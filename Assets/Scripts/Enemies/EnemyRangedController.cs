@@ -6,35 +6,36 @@ using System.Collections;
 public class EnemyRangedController : MonoBehaviour
 {
     [Header("Perception")]
-    public float viewRadius = 14f;                         // видим игрока
-    public LayerMask losObstacleMask;                      // слой стен для LOS
+    public float viewRadius = 14f;                  // радиус обнаружения игрока
+    public LayerMask losObstacleMask;               // слой стен для LOS (видимости)
 
     [Header("Movement")]
-    public float moveSpeed = 3.0f;                         // прокидываем в mover.maxSpeed
-    public float repathInterval = 0.2f;                    // как часто обновлять путь
+    public float moveSpeed = 3.0f;                  // прокинем в mover.maxSpeed
+    public float repathInterval = 0.2f;             // как часто обновлять цель пути
 
     [Header("Kiting (держим дистанцию)")]
-    public float preferredRange = 6.0f;                    // целевой радиус
-    public float minRange = 4.5f;                          // если ближе — отходим
-    public float maxRange = 8.0f;                          // если дальше — подходим
+    public float preferredRange = 6.0f;             // «комфортная» дистанция
+    public float minRange = 4.5f;                   // если ближе — отходим
+    public float maxRange = 8.0f;                   // если дальше — подходим
 
-    [Header("Orbit logic")]
-    public bool useOrbitSlots = true;                      // пытаться занимать слот вокруг игрока
+    [Header("Orbit logic (как у мили)")]
+    public bool useOrbitSlots = true;               // занимать слот у PlayerOrbitTargets
     public float slotReclaimInterval = 0.8f;
 
     [Header("Shooting")]
-    public GameObject projectilePrefab;                    // префаб с компонентом Projectile
-    public float shootCooldown = 1.2f;                     // задержка между выстрелами
-    public float shootWindup = 0.25f;                      // телеграф перед выстрелом (можно 0)
-    public float maxShootRange = 10f;                      // дальше — не стреляем
-    public Transform muzzle;                               // точка вылета (если null — берём transform)
+    public GameObject projectilePrefab;             // префаб с Projectile.cs
+    public Transform muzzle;                        // точка вылета
+    public float shootCooldown = 1.2f;              // КД между выстрелами
+    public float shootWindup = 0.25f;               // телеграф перед выстрелом (ShowWindup)
+    public float maxShootRange = 10f;               // дальше — не стреляем
+    public bool stopToShoot = true;                 // останавливаемся на время выстрела
 
     [Header("Damage filter")]
-    public LayerMask playerMask;                           // слой игрока (или оставить 0 и использовать Tag)
+    public LayerMask playerMask;                    // слой игрока (или оставь 0 и используем Tag "Player")
 
-    [Header("Visual (rotate this)")]
-    [SerializeField] private Transform visualRoot;         // контейнер: спрайт+тень
-    public EnemySpriteAnimator anim;                       // опционально (если есть)
+    [Header("Sprites / Visual")]
+    public EnemySpriteAnimator anim;                // тот же аниматор, что у мили
+    [SerializeField] private Transform visualRoot;  // общий контейнер (спрайт+тень) — вращаем на 0/180 по Y
 
     [Header("Debug")]
     public bool drawGizmos = true;
@@ -49,7 +50,6 @@ public class EnemyRangedController : MonoBehaviour
     Transform orbitTarget;
     float nextRepathAt;
     float nextSlotReclaimAt;
-    bool hasTarget;
     bool onCooldown;
 
     void Start()
@@ -74,7 +74,6 @@ public class EnemyRangedController : MonoBehaviour
 
         if (!visualRoot)
         {
-            // Попробуем найти контейнер вокруг спрайта
             if (anim) visualRoot = anim.transform.parent ? anim.transform.parent : anim.transform;
             else
             {
@@ -97,27 +96,16 @@ public class EnemyRangedController : MonoBehaviour
         if (!player) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
-        hasTarget = (dist <= viewRadius);
-
         FaceByPlayerX();
 
-        if (!hasTarget)
-        {
-            // Можно добавить шатание/патруль, но пока стоим
-            mover.enabled = false;
-            return;
-        }
-
-        // --- ДВИЖЕНИЕ (кайт/подход/обход) ---
-        if (Time.time >= nextRepathAt)
+        // движение (кайт/подход/обход)
+        if (Time.time >= nextRepathAt && (!onCooldown || !stopToShoot))
         {
             nextRepathAt = Time.time + repathInterval;
-
             Vector3 destination = ComputeDestination(dist);
             mover.enabled = true;
             mover.SetDestination(destination);
 
-            // периодически перепривязываем слот (на случай ротации слотов)
             if (useOrbitSlots && Time.time >= nextSlotReclaimAt && PlayerOrbitTargets.Instance != null)
             {
                 nextSlotReclaimAt = Time.time + slotReclaimInterval;
@@ -129,24 +117,19 @@ public class EnemyRangedController : MonoBehaviour
             }
         }
 
-        // --- АТАКА (LOS + дистанция + КД) ---
+        // атака — LOS + дистанция + КД
         if (!onCooldown && dist <= maxShootRange && HasLOS())
-        {
             StartCoroutine(ShootRoutine());
-        }
     }
 
     Vector3 ComputeDestination(float distToPlayer)
     {
-        // 1) если слишком близко — отходим на дуге (от игрока)
         if (distToPlayer < minRange)
         {
-            Vector2 dirAway = ((Vector2)transform.position - (Vector2)player.position).normalized;
-            Vector2 tgt = (Vector2)player.position + dirAway * preferredRange;
-            return tgt;
+            Vector2 away = ((Vector2)transform.position - (Vector2)player.position).normalized;
+            return (Vector2)player.position + away * preferredRange;
         }
 
-        // 2) если слишком далеко — подходим: слот, если валиден, иначе прямо к игроку
         if (distToPlayer > maxRange)
         {
             if (useOrbitSlots && orbitTarget != null && IsSlotVisibleFromPlayer())
@@ -154,14 +137,11 @@ public class EnemyRangedController : MonoBehaviour
             return player.position;
         }
 
-        // 3) если в допустимом коридоре — держим нынешний слот / лёгкий орбитинг
         if (useOrbitSlots && orbitTarget != null && IsSlotVisibleFromPlayer())
             return orbitTarget.position;
 
-        // fallback — точка вокруг целевого радиуса
         Vector2 right = Vector2.Perpendicular(((Vector2)player.position - (Vector2)transform.position).normalized);
-        Vector2 circlePoint = (Vector2)player.position + right * preferredRange;
-        return circlePoint;
+        return (Vector2)player.position + right * preferredRange;
     }
 
     bool HasLOS()
@@ -174,7 +154,6 @@ public class EnemyRangedController : MonoBehaviour
     {
         if (orbitTarget == null) return false;
         if (losObstacleMask.value == 0) return true;
-        // видимость слота именно от игрока (чтоб слот не был за стеной от игрока)
         return !Physics2D.Linecast(player.position, orbitTarget.position, losObstacleMask);
     }
 
@@ -182,11 +161,17 @@ public class EnemyRangedController : MonoBehaviour
     {
         onCooldown = true;
 
-        // лёгкий телеграф/задержка перед выстрелом
-        if (shootWindup > 0f)
-            yield return new WaitForSeconds(shootWindup);
+        // стопим навигацию на время телеграфа/шота — как у милишника
+        bool prevMover = mover.enabled;
+        if (stopToShoot) mover.enabled = false;
 
-        // выстрел
+        // телеграф
+        if (anim) anim.ShowWindup(false);
+        if (shootWindup > 0f) yield return new WaitForSeconds(shootWindup);
+
+        // выстрел + анимация атаки
+        if (anim) anim.PlayAttackOnce();
+
         if (projectilePrefab)
         {
             Vector3 origin = muzzle ? muzzle.position : transform.position;
@@ -194,12 +179,12 @@ public class EnemyRangedController : MonoBehaviour
 
             var go = Instantiate(projectilePrefab, origin, Quaternion.identity);
             var pr = go.GetComponent<Projectile>();
-            if (pr)
-            {
-                // настроим фильтры/параметры снаружи
-                pr.Initialize(dir, playerMask, losObstacleMask);
-            }
+            if (pr) pr.Initialize(dir, playerMask, losObstacleMask);
         }
+
+        // вернуть ходьбу
+        if (stopToShoot) mover.enabled = prevMover;
+        if (anim) anim.PlayWalkLoop();
 
         // КД
         yield return new WaitForSeconds(shootCooldown);
@@ -208,22 +193,16 @@ public class EnemyRangedController : MonoBehaviour
 
     void FaceByPlayerX()
     {
+        if (!visualRoot || !player) return;
         float sign = (player.position.x >= transform.position.x) ? 1f : -1f;
-        if (visualRoot)
-            visualRoot.localRotation = Quaternion.Euler(0f, (sign < 0f ? 180f : 0f), 0f);
-        // если EnemySpriteAnimator.FaceDir(sign) у тебя тоже флипает спрайт — не вызывай его одновременно
+        visualRoot.localRotation = Quaternion.Euler(0f, (sign < 0f ? 180f : 0f), 0f);
     }
 
     void OnDrawGizmosSelected()
     {
         if (!drawGizmos) return;
-        Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.2f);
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
-
-        Gizmos.color = new Color(0.3f, 1f, 0.3f, 0.2f);
-        Gizmos.DrawWireSphere(transform.position, preferredRange);
-
-        Gizmos.color = new Color(1f, 0.6f, 0.1f, 0.2f);
-        Gizmos.DrawWireSphere(transform.position, maxShootRange);
+        Gizmos.color = new Color(0.2f, 0.8f, 1f, 0.2f); Gizmos.DrawWireSphere(transform.position, viewRadius);
+        Gizmos.color = new Color(0.3f, 1f, 0.3f, 0.2f); Gizmos.DrawWireSphere(transform.position, preferredRange);
+        Gizmos.color = new Color(1f, 0.6f, 0.1f, 0.2f); Gizmos.DrawWireSphere(transform.position, maxShootRange);
     }
 }

@@ -308,7 +308,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   playerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   classicWindup: 1.2
   classicHitRadius: 2
   classicHitOffset: 0.8
@@ -331,7 +331,7 @@ MonoBehaviour:
   vfxHit: {fileID: 0}
   vfxDashTrail: {fileID: 0}
   anim: {fileID: 0}
-  visualRoot: {fileID: 0}
+  visualRoot: {fileID: 1471542614386676121}
   drawGizmos: 1
 --- !u!114 &4731696588520482924
 MonoBehaviour:

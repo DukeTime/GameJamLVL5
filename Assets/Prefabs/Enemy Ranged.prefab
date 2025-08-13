@@ -103,14 +103,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 1387799159293524961}
   walk:
-  - {fileID: 7145198348311737387, guid: 238a902c650212a4882b7fb5f35699a0, type: 3}
-  - {fileID: 1768679433190182986, guid: f9c4df966f798164c96a7b7a9bf89764, type: 3}
-  - {fileID: -4885373251318296212, guid: ff6f355e6e6ce6640a56c9b5cddaa6a2, type: 3}
+  - {fileID: 5631415308695899121, guid: 1daf601b38dcedf45bacac9c976771ca, type: 3}
+  - {fileID: 8137282870481675052, guid: 2db042e7811fa974194c8c483155eb06, type: 3}
+  - {fileID: -7325015081676323044, guid: a6438c67f192df54eab49958f757ef4d, type: 3}
+  - {fileID: -4076866897476796393, guid: 2a0e8d3e41a03974984847ab7c5bf590, type: 3}
   attack:
-  - {fileID: 7473920403424214205, guid: 0142fee38a45f4943a34cb8955f34c6c, type: 3}
-  - {fileID: 2777155613528391074, guid: e3f00cb7f8df143498a6469090191947, type: 3}
-  - {fileID: 641515894465698295, guid: 193fb8278a2229745a5a1371cc479694, type: 3}
-  - {fileID: 8725218637780951959, guid: aa0baff4707d6e24fa947ebbefa7585c, type: 3}
+  - {fileID: 2911070366931775019, guid: ba33e97aa2e90fa41b8c6c5b598c483b, type: 3}
+  - {fileID: 5160684801720848237, guid: b0253be8c01becf4a9c2e41b08fd251a, type: 3}
+  - {fileID: 5456576242102492365, guid: f5f09f864368d7647b7a89fb97bab720, type: 3}
+  - {fileID: 498295922471950275, guid: b1c89b9a124b48b40903824d73a43080, type: 3}
   walkFps: 6
   attackFps: 10
   dashWindupTint: {r: 1, g: 0.3, b: 0.3, a: 1}
@@ -154,8 +155,8 @@ Transform:
   m_GameObject: {fileID: 2426469837803129632}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.42, z: 0}
-  m_LocalScale: {x: 9.104781, y: 6.971327, z: 12.589137}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalScale: {x: 7.0208783, y: 5.375729, z: 9.707735}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1471542614386676121}
@@ -228,6 +229,7 @@ GameObject:
   - component: {fileID: 8666455676078615820}
   - component: {fileID: 9221801590719285749}
   - component: {fileID: 4966402432402440898}
+  - component: {fileID: 941517932892536850}
   m_Layer: 0
   m_Name: Enemy Ranged
   m_TagString: Enemy
@@ -312,7 +314,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.018084764, y: -5.896598}
+  m_Offset: {x: 0.49724245, y: -5.896598}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -322,7 +324,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8.435287, y: 2.0764084}
+  m_Size: {x: 5.5494556, y: 2.0764084}
   m_EdgeRadius: 0
 --- !u!114 &9221801590719285749
 MonoBehaviour:
@@ -348,15 +350,16 @@ MonoBehaviour:
   useOrbitSlots: 1
   slotReclaimInterval: 0.8
   projectilePrefab: {fileID: 761631943063199480, guid: 72153420b490dba4cabc34ca2ba80951, type: 3}
+  muzzle: {fileID: 7409613888892298270}
   shootCooldown: 1.2
   shootWindup: 0.25
   maxShootRange: 10
-  muzzle: {fileID: 7409613888892298270}
+  stopToShoot: 1
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
-  visualRoot: {fileID: 1471542614386676121}
+    m_Bits: 128
   anim: {fileID: 0}
+  visualRoot: {fileID: 1471542614386676121}
   drawGizmos: 1
 --- !u!114 &4966402432402440898
 MonoBehaviour:
@@ -380,6 +383,18 @@ MonoBehaviour:
   checkpointCount: 10
   minCheckpointSpacing: 0.15
   enableDirectMode: 1
+--- !u!114 &941517932892536850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882268034879650907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 674da3b27e5478148a1cc5bef40a0e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3561992871830766742
 GameObject:
   m_ObjectHideFlags: 0
