@@ -5,64 +5,56 @@ public class Projectile : MonoBehaviour
     [Header("Flight")]
     public float speed = 12f;
     public float lifeTime = 3f;
-    public float radius = 0.18f;           // Ђтолщинаї снар€да дл€ свипа
+    public float radius = 0.18f;          // толщина свипа
 
     [Header("Damage")]
     public int damage = 8;
     public float knockback = 5f;
 
     [Header("Layers")]
-    public LayerMask playerMask;           // если 0 Ч используем Tag "Player"
-    public LayerMask obstacleMask;         // стены/преп€тстви€
+    public LayerMask playerMask;          // если 0 Ч фильтруем по Tag "Player"
+    public LayerMask obstacleMask;        // стены
 
     Vector2 _dir;
-    Vector2 _prev;
-    bool _initialized;
+    bool _armed;
 
     public void Initialize(Vector2 dir, LayerMask playerLayer, LayerMask obstacleLayer)
     {
         _dir = (dir.sqrMagnitude < 1e-6f) ? Vector2.right : dir.normalized;
-        _prev = transform.position;
         playerMask = playerLayer;
         obstacleMask = obstacleLayer;
-        _initialized = true;
+        _armed = true;
         Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        if (!_initialized) return;
+        if (!_armed) return;
 
         Vector2 pos = transform.position;
-        Vector2 next = pos + _dir * (speed * Time.deltaTime);
+        Vector2 step = _dir * (speed * Time.deltaTime);
+        float dist = step.magnitude;
 
-        // 1) проверка попадани€ в стену по пути
-        if (obstacleMask.value != 0)
+        // стоп по стене
+        if (obstacleMask.value != 0 && Physics2D.CircleCast(pos, radius, _dir, dist, obstacleMask))
         {
-            if (Physics2D.CircleCast(pos, radius, _dir, (next - pos).magnitude, obstacleMask))
-            {
-                Destroy(gameObject);
-                return;
-            }
+            Destroy(gameObject);
+            return;
         }
 
-        // 2) свип попадани€ по игроку
+        // попадание в игрока (свип)
         int mask = (playerMask.value != 0) ? playerMask.value : Physics2D.DefaultRaycastLayers;
-        var hits = Physics2D.CircleCastAll(pos, radius, _dir, (next - pos).magnitude, mask);
+        var hits = Physics2D.CircleCastAll(pos, radius, _dir, dist, mask);
 
-        foreach (var hit in hits)
+        foreach (var h in hits)
         {
-            var col = hit.collider;
-
-            // если нет €вной маски Ч фильтруем по тегу
+            var col = h.collider;
             if (playerMask.value == 0 && !col.CompareTag("Player")) continue;
 
-            // урон
             var health = col.GetComponentInParent<PlayerHealth>();
             if (health != null) health.TakeDamage(damage);
             else col.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
 
-            // нокбэк
             var prb = col.attachedRigidbody ?? col.GetComponentInParent<Rigidbody2D>();
             if (prb) prb.AddForce(_dir * knockback, ForceMode2D.Impulse);
 
@@ -70,9 +62,7 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        // 3) движение
-        transform.position = next;
-        _prev = next;
+        transform.position = pos + step;
     }
 
 #if UNITY_EDITOR
