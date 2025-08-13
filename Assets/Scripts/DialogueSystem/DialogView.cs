@@ -51,6 +51,7 @@ public class DialogView : MonoBehaviour
         }
         else
         {
+            Debug.Log(phrase.characterId);
             characterNameText.text = phrase.characterId;
             characterPortrait.sprite = null;
         }

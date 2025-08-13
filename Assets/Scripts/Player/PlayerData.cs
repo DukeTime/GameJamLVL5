@@ -24,6 +24,6 @@ public class PlayerData: MonoBehaviour
         GlobalGameController.Instance.CutsceneFreeze();
         GlobalGameController.Instance.sceneProgress = 1;
         
-        StartCoroutine(GlobalGameController.Instance.LoadScene("Base1"));
+        StartCoroutine(GlobalGameController.Instance.LoadScene(0));
     }
 }

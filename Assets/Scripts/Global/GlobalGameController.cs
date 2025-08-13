@@ -22,10 +22,14 @@ public class GlobalGameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    public IEnumerator LoadScene(string sceneName)
+    public IEnumerator LoadScene(int sceneIndex = 0)
     {
         yield return StartCoroutine(ViewManager.Instance.FadeIn());
-        SceneManager.LoadScene(sceneName);
+        // if (sceneIndex != 0)
+        //     SceneManager.LoadScene(sceneName);
+        // else
+        //
+        SceneManager.LoadScene(sceneIndex);
     }
 
     public void Pause()
