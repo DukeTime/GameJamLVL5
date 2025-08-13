@@ -33,7 +33,6 @@ public class PlayerInputHandler : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log(3);
                 AttackPressed.Invoke();
             }
 

@@ -1,31 +1,7 @@
 fileFormatVersion: 2
-guid: 01ebbf570b145514cbf7073b659988c7
+guid: 166740caaec314a4497ebb199fedb8ab
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: -7657432009003405298
-    second: concepts_0
-  - first:
-      213: 8959928854784537190
-    second: concepts_1
-  - first:
-      213: -3279981830864779357
-    second: concepts_2
-  - first:
-      213: -2417085257371895663
-    second: concepts_3
-  - first:
-      213: 381188697168079946
-    second: concepts_4
-  - first:
-      213: -4364844894435047942
-    second: concepts_5
-  - first:
-      213: -6673676683040874721
-    second: concepts_6
-  - first:
-      213: -7535119028740663200
-    second: concepts_7
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -96,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -134,177 +110,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: concepts_0
+      name: 2lvl5Tiles_2
       rect:
         serializedVersion: 2
-        x: 49
-        y: 929
-        width: 842
-        height: 1052
+        x: 9
+        y: 224
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e0075ab98265bb590800000000000000
-      internalID: -7657432009003405298
+      spriteID: be98793e404846d4db7ed9dfa3b75594
+      internalID: 358831888
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_1
+      name: 2lvl5Tiles_3
       rect:
         serializedVersion: 2
-        x: 880
-        y: 1629
-        width: 300
-        height: 300
+        x: 96
+        y: 224
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 662743a52df085c70800000000000000
-      internalID: 8959928854784537190
+      spriteID: e5e7fd48e2d1f7a4083c6801b00d1ae9
+      internalID: 2052104611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_2
+      name: 2lvl5Tiles_4
       rect:
         serializedVersion: 2
-        x: 1579
-        y: 1169
-        width: 362
-        height: 822
+        x: 16
+        y: 144
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 3a7c19527e92b72d0800000000000000
-      internalID: -3279981830864779357
+      spriteID: 37778836633079544aaa558b842ed91b
+      internalID: -152061955
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_3
+      name: 2lvl5Tiles_5
       rect:
         serializedVersion: 2
-        x: 149
-        y: 69
-        width: 502
-        height: 822
+        x: 96
+        y: 144
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 198b382c3c9c47ed0800000000000000
-      internalID: -2417085257371895663
+      spriteID: e7d2a13f2da251b4abf8b3674155fa95
+      internalID: 231678482
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_4
+      name: 2lvl5Tiles_6
       rect:
         serializedVersion: 2
-        x: 1099
-        y: 689
-        width: 792
-        height: 472
+        x: 16
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a4ce817b9114a4500800000000000000
-      internalID: 381188697168079946
+      spriteID: bfd1d79b70205c546adb026be89dc281
+      internalID: 1703809000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_5
+      name: 2lvl5Tiles_7
       rect:
         serializedVersion: 2
-        x: 898
-        y: 75
-        width: 392
-        height: 502
+        x: 96
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: af58587c1b4fc63c0800000000000000
-      internalID: -4364844894435047942
+      spriteID: 209555ab2f08284438282cf8fde2edd9
+      internalID: 675509136
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_6
+      name: 2lvl5Tiles_0
       rect:
         serializedVersion: 2
-        x: 1329
-        y: 79
-        width: 72
-        height: 302
+        x: 105
+        y: 321
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f1f9a895a665263a0800000000000000
-      internalID: -6673676683040874721
+      spriteID: fd1c7a424de10a74fbad27e772e73a61
+      internalID: -113472205
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: concepts_7
+      name: 2lvl5Tiles_1
       rect:
         serializedVersion: 2
-        x: 1531
-        y: 80
-        width: 299
-        height: 419
+        x: 23
+        y: 321
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 06850a78a21ed6790800000000000000
-      internalID: -7535119028740663200
+      spriteID: 56b7f8e3d76de5d4d83f940a10e33b28
+      internalID: -1430774612
       vertices: []
       indices: 
       edges: []
@@ -313,7 +289,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b0c10bf4cbe17ed4d95dd7f488833afd
+    spriteID: 8399d040613758a4cb1fc6d409810f15
     internalID: 0
     vertices: []
     indices: 
@@ -323,16 +299,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      concepts_0: -7657432009003405298
-      concepts_1: 8959928854784537190
-      concepts_2: -3279981830864779357
-      concepts_3: -2417085257371895663
-      concepts_4: 381188697168079946
-      concepts_5: -4364844894435047942
-      concepts_6: -6673676683040874721
-      concepts_7: -7535119028740663200
-      concepts_8: -1509792342
-      concepts_9: -1451281817
+      2lvl5Tiles_0: -113472205
+      2lvl5Tiles_1: -1430774612
+      2lvl5Tiles_2: 358831888
+      2lvl5Tiles_3: 2052104611
+      2lvl5Tiles_4: -152061955
+      2lvl5Tiles_5: 231678482
+      2lvl5Tiles_6: 1703809000
+      2lvl5Tiles_7: 675509136
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

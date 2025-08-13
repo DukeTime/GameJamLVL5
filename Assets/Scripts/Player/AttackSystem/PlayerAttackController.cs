@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PlayerAttackController : MonoBehaviour
 {
+    public Action OnAttack;
+    
     [SerializeField] private PlayerConfig _attackData;
     [SerializeField] private Transform _weaponPivot; // Точка, от которой идёт атака (обычно чуть перед игроком)
     
@@ -17,6 +20,8 @@ public class PlayerAttackController : MonoBehaviour
     {
         if (!CanAttack())
             return;
+        
+        OnAttack?.Invoke();
         
         _lastAttackTime = Time.time;
         _isAttacking = true;

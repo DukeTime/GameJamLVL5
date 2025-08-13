@@ -50,13 +50,13 @@ public class MouseAimController : MonoBehaviour
 
     public IEnumerator AttackAnim()
     {
-        FreezeRot = true;
-        Debug.Log(1);
-        yield return StartCoroutine(AttackAnimation(true, 0.5f));
-        Debug.Log(2);
-        yield return StartCoroutine(AttackAnimation());
-        Debug.Log(3);
-        FreezeRot = false;
+        if (!FreezeRot)
+        {
+            FreezeRot = true;
+            yield return StartCoroutine(AttackAnimation(true, 0.5f));
+            yield return StartCoroutine(AttackAnimation());
+            FreezeRot = false;
+        }
     }
 
     private IEnumerator AttackAnimation(bool reversed = false, float modifaer = 1f)
@@ -124,8 +124,6 @@ public class MouseAimController : MonoBehaviour
                 }
             }
         }
-    
-    Debug.Log(targetAngle);
     
         while (progress < 1f)
         {

@@ -5,6 +5,7 @@ public class PlayerAnimationController : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private MouseAimController mouseAimController;
+    [SerializeField] private PlayerAttackController playerAttackController;
     private PlayerInputHandler _input;
 
     // Хэши для оптимизации
@@ -29,7 +30,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Start()
     {
-        _input.AttackPressed += (() => StartCoroutine(mouseAimController.AttackAnim()));
+        playerAttackController.OnAttack += (() => StartCoroutine(mouseAimController.AttackAnim()));
     }
 
     public void UpdateAnimationParameters()
