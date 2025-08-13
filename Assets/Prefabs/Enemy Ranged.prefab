@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 2426469837803129632}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.324, y: -0.42, z: 0}
+  m_LocalPosition: {x: 0, y: -0.42, z: 0}
   m_LocalScale: {x: 9.104781, y: 6.971327, z: 12.589137}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -225,12 +225,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7611870376825288095}
   - component: {fileID: 352196599123857144}
-  - component: {fileID: 4395982471796958354}
-  - component: {fileID: 4731696588520482924}
-  - component: {fileID: 1644804088572693952}
   - component: {fileID: 8666455676078615820}
+  - component: {fileID: 9221801590719285749}
+  - component: {fileID: 4966402432402440898}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy Ranged
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,95 +278,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &4395982471796958354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2882268034879650907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8100b878b71516840b6e85fdd42f678c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 25
-  moveSpeed: 3
-  approachEnterSlotDistance: 0.35
-  approachAlignAngleDeg: 30
-  requireLOSForApproach: 0
-  losObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  approachCommitTime: 1.3
-  wanderRadius: 2
-  wanderPauseRange: {x: 0.4, y: 1}
-  wanderPointTolerance: 0.2
-  attackKindOnSpawn: 0
-  chooseRandomKindWeights: {x: 0.7, y: 0.3}
-  attackCooldown: 1.5
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  classicWindup: 1.2
-  classicHitRadius: 2
-  classicHitOffset: 0.8
-  classicDamage: 10
-  classicKnockback: 6
-  classicAttackTriggerDistance: 1.25
-  classicStopDistance: 1
-  classicSlotIgnoreDistance: 1.6
-  dashWindup: 1
-  dashDistance: 5
-  dashDuration: 0.22
-  dashHitRadius: 0.6
-  dashDamage: 12
-  dashKnockback: 8
-  dashStopOnWall: 1
-  dashAttackTriggerDistance: 3
-  dashStopDistance: 2.4
-  dashSlotIgnoreDistance: 2.6
-  vfxWindup: {fileID: 0}
-  vfxHit: {fileID: 0}
-  vfxDashTrail: {fileID: 0}
-  anim: {fileID: 0}
-  visualRoot: {fileID: 0}
-  drawGizmos: 1
---- !u!114 &4731696588520482924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2882268034879650907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b1dc7eb7c8549318af8e2bfc300cc3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxHealth: 100
---- !u!114 &1644804088572693952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2882268034879650907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edf847d078d75ea4a99d252ce748dd42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nav: {fileID: 0}
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  maxSpeed: 3.2
-  acceleration: 25
-  waypointTolerance: 0.12
-  checkpointCount: 10
-  minCheckpointSpacing: 0.15
-  enableDirectMode: 1
 --- !u!61 &8666455676078615820
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -402,7 +312,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.7682018, y: -5.896598}
+  m_Offset: {x: -0.018084764, y: -5.896598}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -412,8 +322,95 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.935053, y: 2.0764089}
+  m_Size: {x: 8.435287, y: 2.0764084}
   m_EdgeRadius: 0
+--- !u!114 &9221801590719285749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882268034879650907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 917b9c7ff5bd3d64d8c2b09318f36073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 30
+  losObstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  moveSpeed: 3
+  repathInterval: 0.2
+  preferredRange: 6
+  minRange: 4.5
+  maxRange: 8
+  useOrbitSlots: 1
+  slotReclaimInterval: 0.8
+  projectilePrefab: {fileID: 761631943063199480, guid: 72153420b490dba4cabc34ca2ba80951, type: 3}
+  shootCooldown: 1.2
+  shootWindup: 0.25
+  maxShootRange: 10
+  muzzle: {fileID: 7409613888892298270}
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  visualRoot: {fileID: 1471542614386676121}
+  anim: {fileID: 0}
+  drawGizmos: 1
+--- !u!114 &4966402432402440898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2882268034879650907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edf847d078d75ea4a99d252ce748dd42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nav: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxSpeed: 3.2
+  acceleration: 25
+  waypointTolerance: 0.12
+  checkpointCount: 10
+  minCheckpointSpacing: 0.15
+  enableDirectMode: 1
+--- !u!1 &3561992871830766742
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7409613888892298270}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7409613888892298270
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3561992871830766742}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1471542614386676121}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7509316285755639961
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +442,7 @@ Transform:
   m_Children:
   - {fileID: 4956506641933480886}
   - {fileID: 1495111734233213751}
+  - {fileID: 7409613888892298270}
   m_Father: {fileID: 3159652857384324694}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8446810071328232071
