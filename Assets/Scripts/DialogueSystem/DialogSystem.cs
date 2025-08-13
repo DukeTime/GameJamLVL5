@@ -28,8 +28,6 @@ public class DialogSystem : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        LoadAllCharacters();
     }
     
     private void LoadAllCharacters()
