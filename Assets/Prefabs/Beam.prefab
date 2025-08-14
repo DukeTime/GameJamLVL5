@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8033120653781576364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8868969620509536594}
+  - component: {fileID: 9149562614399518593}
+  m_Layer: 0
+  m_Name: Beam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8868969620509536594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033120653781576364}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.392776, y: -4.159168, z: -0.01791178}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9149562614399518593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033120653781576364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1176c2c574b7a82408edecc9227abac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSprite: {fileID: -7653452125669068650, guid: 7b1d78a92217cca4f9b8c54b198c58ba, type: 3}
+  midASprite: {fileID: 416874495715469823, guid: cef77b62287b9ef4d9c9148d892ea79f, type: 3}
+  midBSprite: {fileID: 279562046007062644, guid: 05e8b9964a9880f47b3f4f200d747ba0, type: 3}
+  midCSprite: {fileID: -6174638911548845746, guid: e1364287095876a4aa5edaef9f709b01, type: 3}
+  endSprite: {fileID: 3491130694614752276, guid: 3b3b04c85afb78f458ad5f8806a87d3f, type: 3}
+  muzzle: {fileID: 0}
+  segmentsRoot: {fileID: 0}
+  pixelsPerUnit: 100
+  sortingOrder: 20
+  sortingLayer: Effects
+  thickness: 1
+  fadeIn: 0.08
+  stayTime: 0.1
+  fadeOut: 0.1
+  drawGizmos: 0
