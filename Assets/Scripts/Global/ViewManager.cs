@@ -79,12 +79,38 @@ public class ViewManager : MonoBehaviour
     }
     public IEnumerator StartRuneChoice(List<Rune> runes)
     {
-        option1Txt.text = runes[0].Name;
-        option2Txt.text = runes[1].Name;
-        option3Txt.text = runes[2].Name;
-        option1Desc.text = runes[0].Description;
-        option2Desc.text = runes[1].Description;
-        option3Desc.text = runes[2].Description;
+        if (PlayerStats.IsLearned(runes[0].Name))
+        {
+            option1Txt.text = runes[0].Name;
+            option1Desc.text = runes[0].Description;
+        }
+        else{
+            Debug.Log("99999" + runes[0].AltName);
+            option1Txt.text = "777";
+            option1Desc.text = "???";
+        }
+
+        if (PlayerStats.IsLearned(runes[1].Name))
+        {
+            option2Txt.text = runes[1].Name;
+            option2Desc.text = runes[1].Description;    
+        }
+        else{
+            option2Txt.text = runes[1].AltName;
+            option2Desc.text = "???";    
+        }
+
+        if (PlayerStats.IsLearned(runes[2].Name))
+        {
+            option3Txt.text = runes[2].Name;
+            option3Desc.text = runes[2].Description;
+        }
+        else
+        {
+            option3Txt.text = runes[2].AltName;
+            option3Desc.text = "???";
+        }
+
         option1Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[0])));
         option2Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[1])));
         option3Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[2])));

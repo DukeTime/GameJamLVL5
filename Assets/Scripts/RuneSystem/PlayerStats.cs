@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class PlayerStats
@@ -23,9 +25,40 @@ public static class PlayerStats
     
     public static List<string> ActiveAbilities { get { return new List<string>(abilityPrefabPaths); } }
 
+    // 1. Функция преобразования строки в массив
+    static string[] ParseStringArray(string input)
+    {
+        // Удаляем квадратные скобки и пробелы
+        string cleaned = input.Trim(new char[] {'[', ']', ' '})
+            .Replace(" ", "");
+        
+        // Разделяем элементы по запятым, удаляя кавычки
+        return cleaned.Split(new[] { '\'', ',' }, StringSplitOptions.RemoveEmptyEntries);
+    }
+    
+    // 2. Функция обратного преобразования (массив в строку)
+    static string ToArrayString(string[] array)
+    {
+        return "[" + string.Join(", ", array.Select(x => $"'{x}'")) + "]";
+    }
+    
+    // 3. Функция добавления элемента в массив
+    static string[] AddToArray(string[] sourceArray, string newElement)
+    {
+        string[] newArray = new string[sourceArray.Length + 1];
+        Array.Copy(sourceArray, newArray, sourceArray.Length);
+        newArray[newArray.Length - 1] = newElement;
+        return newArray;
+    }
+    
     // Применить руну
     public static void ApplyRune(Rune rune)
     {
+        string oldRunes = PlayerPrefs.GetString("Runes");
+        string[] newRunes = AddToArray(ParseStringArray(oldRunes), rune.Name);
+        Debug.Log(rune.Name + ToArrayString(newRunes));
+        PlayerPrefs.SetString("Runes", ToArrayString(newRunes));
+        
         if (rune.Type == RuneType.UniqueAbility && !string.IsNullOrEmpty(rune.AbilityPrefabPath))
         {
             if (!abilityPrefabPaths.Contains(rune.AbilityPrefabPath))
@@ -41,6 +74,13 @@ public static class PlayerStats
             }
         }
     }
+
+    public static bool IsLearned(string runeName)
+    {
+        string[] newRunes = ParseStringArray(PlayerPrefs.GetString("Runes"));
+        Debug.Log(runeName + newRunes.Contains(runeName));
+        return newRunes.Contains(runeName);
+    } 
 
     // Сбросить все характеристики (при смерти/новой игре)
     public static void ResetStats()

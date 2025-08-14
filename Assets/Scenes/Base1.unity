@@ -5201,7 +5201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetStats: 0
+  resetStats: 1
   playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
   enemiesPrefs: []
 --- !u!4 &1110964065
@@ -7561,7 +7561,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 37687838878580569, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Text
-      value: attack but
+      value: attack
       objectReference: {fileID: 0}
     - target: {fileID: 68148052975476400, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Text
