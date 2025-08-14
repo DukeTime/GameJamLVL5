@@ -15,4 +15,6 @@ MonoBehaviour:
   characterId: "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
   displayName: "\u041D\u0435\u0437\u043D\u0430\u043A\u043E\u043C\u0435\u0446"
   defaultPortrait: {fileID: -7535119028740663200, guid: 01ebbf570b145514cbf7073b659988c7, type: 3}
-  emotionPortraits: []
+  emotionPortraits:
+  - emotionId: 
+    portrait: {fileID: -7535119028740663200, guid: 01ebbf570b145514cbf7073b659988c7, type: 3}

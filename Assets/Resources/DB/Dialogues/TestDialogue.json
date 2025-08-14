@@ -3,14 +3,15 @@
     {
       "characterId": "Незнакомец",
       "emotion": "",
-      "text": "Приветствую, путник! Как твои дела?",
-      "textStyle": "default"
+      "text": "Приветствую, путник! Как твои дела?"
     },
     {
       "characterId": "Игрок",
       "emotion": "",
       "text": "Неплохо, спасибо что спросил!",
-      "textStyle": "player"
+      "encounters": [
+        "NextScene"
+      ]
     }
   ]
 }

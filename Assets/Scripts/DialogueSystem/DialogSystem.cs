@@ -6,6 +6,7 @@ public class DialogSystem : MonoBehaviour
 {
     public static DialogSystem Instance { get; private set; }
     
+    [SerializeField] private DialoguesInteractions dialogueInteractions;
     [SerializeField] private string dialogsFolder = "Dialogs";
     [SerializeField] private string charactersFolder = "Characters";
     [SerializeField] private float textSpeed = 20f; // Characters per second
@@ -28,6 +29,9 @@ public class DialogSystem : MonoBehaviour
         
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadAllCharacters();
+        dialogueInteractions.Init();
     }
     
     private void LoadAllCharacters()
@@ -78,6 +82,17 @@ public class DialogSystem : MonoBehaviour
             }
 
             yield return null;
+
+            if (currentDialog.phrases[currentPhraseIndex].encounters != null)
+            {
+                foreach (string encounter in currentDialog.phrases[currentPhraseIndex].encounters)
+                {
+                    dialogueInteractions
+                        .All[encounter]
+                        .Activate();
+                }
+            }
+            
             currentPhraseIndex++;
         }
         EndDialog();
