@@ -1,0 +1,10 @@
+{
+  "phrases": [
+    {
+      "characterId": "Статуя богини",
+      "emotion": "",
+      "text": "Вера каждого помогает сохранить мир.",
+      "encounters": ["NextScene"]
+    }
+  ]
+}

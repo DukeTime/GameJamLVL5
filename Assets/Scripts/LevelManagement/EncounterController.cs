@@ -265,6 +265,8 @@ public class EncounterController : MonoBehaviour
         {
             _arrowInstance = Instantiate(arrowPrefab, statue.position + arrowOffset, Quaternion.identity);
             _arrowInstance.transform.SetParent(statue);
+
+            statue.gameObject.GetComponent<NpcController>().interacted = false;
         }
     }
 

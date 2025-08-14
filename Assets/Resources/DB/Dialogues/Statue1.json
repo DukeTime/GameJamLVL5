@@ -1,0 +1,10 @@
+{
+  "phrases": [
+    {
+      "characterId": "Статуя богини",
+      "emotion": "",
+      "text": "КАРМЭН богиня времени. Второй столп мира.",
+      "encounters": ["NextScene"] 
+    }
+  ]
+}
