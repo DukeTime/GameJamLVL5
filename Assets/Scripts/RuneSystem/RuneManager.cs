@@ -79,43 +79,6 @@ public static class RuneManager
     // Сбросить все исключенные руны (при новой игре)
     public static void ResetExcludedRunes()
     {
-        Rune aboba = new Rune("Усиление", "attack", "УРОН ВОЗРАСТАЕТ", 
-            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Damage, 100f }});
-        
-        Debug.Log(aboba.Name);
-        allRunes  = new List<Rune>
-        {
-            // Простые бонусы
-            new Rune("Усиление", "attack", "УРОН ВОЗРАСТАЕТ", 
-                RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Damage, 100f }}),
-            new Rune("Ускорение", "speedy", "СКОРОСТЬ ВОЗРАСТАЕТ", 
-                RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Speed, 10f }}),
-            // new Rune("Руна здоровья", "Руна силы", "+25% здоровья", 
-            //     RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Health, 0.25f }}),
-            new Rune("Ловкость", "dexter", "СКОРОСТЬ АТАК ВОЗРАСТАЕТ", 
-                RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.AttackSpeed, 0.1f }}),
-            
-            // Смешанные руны (бонус + штраф)
-            new Rune("Натиск","hhaste",  "↑↑ СКОРОСТЬ\n↓ УРОН", 
-                RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Damage, 0.3f }, { StatType.Health, -0.15f }}),
-            new Rune("Вихрь","tornad",  "↑↑ СКОРОСТЬ АТАК\n↓ СКОРОСТЬ", 
-                RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
-            new Rune("Рвение","berser",  "↑↑ УРОН\n↓ ЗДОРОВЬЕ", 
-                RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
-            new Rune("Укрепление","aarmor",  "↑ ЗДОРОВЬЕ\n↓ СКОРОСТЬ", 
-                RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
-                
-            // Уникальные способности
-            // new Rune("Руна комбо","Руна силы",  
-            //     "Комбо атака: 3 быстрых удара", 
-            //     RuneType.UniqueAbility, 
-            //     null, "Prefabs/Abilities/ComboAttack"),
-            // new Rune("Руна отражения","Руна силы",  "Ударная волна при получении урона", RuneType.UniqueAbility,
-            //     null, "Prefabs/Abilities/ShockwaveOnHit"),
-            // new Rune("Руна вампиризма","Руна силы",  "5% украденного здоровья с каждого удара", RuneType.UniqueAbility,
-            //     null, "Prefabs/Abilities/LifeSteal")
-        };
-        
         excludedRunes.Clear();
     }
 }
@@ -136,7 +99,8 @@ public class Rune
                Dictionary<StatType, float> statModifiers = null, 
                string abilityPrefabPath = "")
     {
-        Name = altName;
+        Name = name;
+        AltName = altName;
         Description = description;
         Type = type;
         StatModifiers = statModifiers ?? new Dictionary<StatType, float>();

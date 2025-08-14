@@ -85,8 +85,7 @@ public class ViewManager : MonoBehaviour
             option1Desc.text = runes[0].Description;
         }
         else{
-            Debug.Log("99999" + runes[0].AltName);
-            option1Txt.text = "777";
+            option1Txt.text = runes[0].AltName;
             option1Desc.text = "???";
         }
 
