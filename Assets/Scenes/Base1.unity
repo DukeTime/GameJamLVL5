@@ -7568,11 +7568,19 @@ PrefabInstance:
       objectReference: {fileID: 7482667652216324306, guid: 732d1ee96d941b449a4657dd98a63aac, type: 3}
     - target: {fileID: 2183025368798024473, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2183025368798024473, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5301580966376652351, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Name
       value: _ViewManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5301580966376652351, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5655539305781961759, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_LocalPosition.x

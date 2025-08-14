@@ -16,7 +16,7 @@ public class CameraFollowing : MonoBehaviour
         PlayerController playerController = ServiceLocator.Current.Get<PlayerController>();
         
         _target = playerController.gameObject.transform;
-        _offset = transform.position - _target.position;
+        _offset = new Vector3(0, 0, transform.position.z - _target.position.z);
     }
 
     private void LateUpdate()

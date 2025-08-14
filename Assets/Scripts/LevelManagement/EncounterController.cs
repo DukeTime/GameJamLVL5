@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// ===== Опциональные интерфейсы сервисов (если используешь ServiceLocator) =====
-/// (Можно не регистрировать — код сам fallback'нется на прямые вызовы)
+/// ===== пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ServiceLocator) =====
+/// (пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ fallback'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ)
 public interface IVfxService : IService
 {
     GameObject PlaySmoke(Vector3 position, float duration, GameObject overridePrefab = null);
@@ -15,31 +15,31 @@ public interface ILevelFlowService : IService
     void ConfirmAdvance();
 }
 
-/// ===== Основной контроллер боя: волны, спавн из люков, дымка, стрелка над статуей =====
+/// ===== пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ =====
 [DisallowMultipleComponent]
 public class EncounterController : MonoBehaviour
 {
-    // ---- Вспомогательные описатели внутри одного файла ----
+    // ---- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ ----
     [System.Serializable] public class EnemyPack { public GameObject prefab; [Min(1)] public int count = 1; }
 
     [System.Serializable]
     public class Wave
     {
-        [Tooltip("Состав волны: какие префабы и сколько.")]
+        [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.")]
         public List<EnemyPack> enemies = new List<EnemyPack>();
-        [Tooltip("Пауза перед появлением ЭТОЙ волны (сек).")] public float preWaveDelay = 0.8f;
-        [Tooltip("Интервал между инстансами внутри волны (0 = всё сразу).")] public float perSpawnDelay = 0.05f;
+        [Tooltip("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ).")] public float preWaveDelay = 0.8f;
+        [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (0 = пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ).")] public float perSpawnDelay = 0.05f;
     }
 
     [System.Serializable]
-    public class Hatch          // «Люк» спавна
+    public class Hatch          // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     {
-        [Tooltip("Корневой объект люка. Его дочерние трансформы = точки спавна.")]
+        [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ = пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.")]
         public Transform root;
-        [Tooltip("Минимальная дистанция до игрока для валидной точки.")] public float minDistanceToPlayer = 4f;
+        [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")] public float minDistanceToPlayer = 4f;
         [Header("Telegraph")] public GameObject smokePrefab; public float telegraphDuration = 0.6f;
 
-        // Кеш дочерних точек
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         List<Transform> _points;
         public IReadOnlyList<Transform> Points
         {
@@ -62,13 +62,13 @@ public class EncounterController : MonoBehaviour
             var pts = Points;
             if (pts == null || pts.Count == 0) return root != null ? root.position : Vector3.zero;
 
-            // попытки найти валидную по дистанции
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             for (int i = 0; i < 12; i++)
             {
                 var p = pts[Random.Range(0, pts.Count)].position;
                 if (Vector2.Distance(playerPos, p) >= minDistanceToPlayer) return p;
             }
-            // fallback — самая дальняя
+            // fallback пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             float best = -1f; Vector3 bestP = pts[0].position;
             foreach (var t in pts)
             {
@@ -79,28 +79,31 @@ public class EncounterController : MonoBehaviour
         }
     }
 
-    // ---- Настройки ----
+    // ---- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ----
     [Header("Hatches & Player")]
-    [Tooltip("Люки спавна. Если пусто — возьмём все объекты с тэгом 'Hatch' и их детей как точки.")]
+    [Tooltip("пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ 'Hatch' пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")]
     public List<Hatch> hatches = new List<Hatch>();
-    [Tooltip("Игрок (если не задан — найдём по тегу Player).")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ Player).")]
     public Transform player;
 
     [Header("Waves")]
     public List<Wave> waves = new List<Wave>();
-    [Tooltip("Пауза после зачистки волны перед следующей (сек).")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ).")]
     public float afterWaveDelay = 1.0f;
-    [Tooltip("Исключать ближайший к игроку люк при спавне?")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?")]
     public bool avoidNearestHatchToPlayer = true;
 
     [Header("End of Encounter (statue exit)")]
-    [Tooltip("Статуя/триггер выхода. Над ней появится стрелка после последней волны.")]
+    [Tooltip("пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.")]
     public Transform statue;
     public GameObject arrowPrefab;
     public Vector3 arrowOffset = new Vector3(0, 1.6f, 0);
     public float interactRadius = 1.5f;
-    [Tooltip("Имя следующей сцены. Оставь пустым, если переход обработает твой диалог через сервис.")]
+    [Tooltip("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.")]
     public string nextSceneName = "";
+
+    public PlayerController playerController;
+    public GameObject _playerObj;
 
     // ---- Runtime ----
     readonly List<GameObject> _spawnedThisWave = new();
@@ -109,13 +112,7 @@ public class EncounterController : MonoBehaviour
 
     void Awake()
     {
-        if (player == null)
-        {
-            var p = GameObject.FindWithTag("Player");
-            if (p) player = p.transform;
-        }
-
-        // Если хэтчи не заданы — собрать из объектов с тегом "Hatch"
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ "Hatch"
         if (hatches == null || hatches.Count == 0)
         {
             var hatchRoots = GameObject.FindGameObjectsWithTag("Hatch");
@@ -127,18 +124,26 @@ public class EncounterController : MonoBehaviour
 
     void Start()
     {
+        player = ServiceLocator.Current.Get<PlayerController>().gameObject.transform;
+        
+        if (player == null)
+        {
+            var p = GameObject.FindWithTag("Player");
+            if (p) player = p.transform;
+        }
+        
         StartCoroutine(RunEncounter());
     }
 
     void Update()
     {
-        // обработка взаимодействия со статуей (стрелка уже активирована)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
         if (_exitActive && statue != null && player != null)
         {
             if (Vector2.Distance(player.position, statue.position) <= interactRadius &&
                 Input.GetKeyDown(KeyCode.E))
             {
-                // Если есть сервис — отдаем туда, иначе грузим напрямую (если имя сцены не пусто)
+                // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
                 try
                 {
                     var flow = ServiceLocator.Current.Get<ILevelFlowService>();
@@ -157,18 +162,18 @@ public class EncounterController : MonoBehaviour
     {
         for (int w = 0; w < waves.Count; w++)
         {
-            // задержки перед волной
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             if (w > 0 && afterWaveDelay > 0f) yield return new WaitForSeconds(afterWaveDelay);
             if (waves[w].preWaveDelay > 0f) yield return new WaitForSeconds(waves[w].preWaveDelay);
 
             _spawnedThisWave.Clear();
             yield return SpawnWave(waves[w]);
 
-            // ждать зачистки
+            // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             yield return WaitUntilWaveCleared();
         }
 
-        // конец боя — включаем стрелку
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ActivateExitArrow();
     }
 
@@ -176,7 +181,7 @@ public class EncounterController : MonoBehaviour
     {
         if (hatches == null || hatches.Count == 0) yield break;
 
-        // исключить ближайший люк
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
         int nearest = -1;
         if (player != null && avoidNearestHatchToPlayer)
         {
@@ -206,7 +211,7 @@ public class EncounterController : MonoBehaviour
                 var hatch = usable[Random.Range(0, usable.Count)];
                 Vector3 pos = hatch.PickPointFarFrom(player != null ? player.position : Vector3.zero);
 
-                // Телеграф (дымка): через сервис если есть, иначе напрямую
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅ): пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 bool usedService = false;
                 if (hatch.telegraphDuration > 0f)
                 {
@@ -216,7 +221,7 @@ public class EncounterController : MonoBehaviour
                         vfx.PlaySmoke(pos, hatch.telegraphDuration, hatch.smokePrefab);
                         usedService = true;
                     }
-                    catch { /* сервиса нет — норм */ }
+                    catch { /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ */ }
 
                     if (!usedService && hatch.smokePrefab != null)
                     {

@@ -351,7 +351,7 @@ MonoBehaviour:
   slotReclaimInterval: 0.8
   projectilePrefab: {fileID: 761631943063199480, guid: 72153420b490dba4cabc34ca2ba80951, type: 3}
   muzzle: {fileID: 7409613888892298270}
-  shootCooldown: 1.2
+  shootCooldown: 3
   shootWindup: 0.25
   maxShootRange: 10
   stopToShoot: 1
@@ -395,6 +395,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674da3b27e5478148a1cc5bef40a0e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 40
+  currentHP: 0
+  onHit:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &3561992871830766742
 GameObject:
   m_ObjectHideFlags: 0
