@@ -139,7 +139,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6799162530011010471}
   - component: {fileID: 1656715639452063171}
-  - component: {fileID: 1301279731958432622}
   m_Layer: 8
   m_Name: Hurtbox
   m_TagString: Enemy
@@ -199,19 +198,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.36072987, y: -0.4122615}
   m_Size: {x: 4.1072903, y: 14.604636}
   m_Direction: 0
---- !u!114 &1301279731958432622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844979326803615898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9859621eeb6b79d4ea66971a677dbd04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 941517932892536850}
 --- !u!1 &2426469837803129632
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 674da3b27e5478148a1cc5bef40a0e5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 40
+  maxHP: 70
   currentHP: 0
   invulAfterHit: 0.05
   flashRenderer: {fileID: 0}
