@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour, IService
     [HideInInspector] public PlayerMovement Movement { get; private set; }
     [HideInInspector] public PlayerAnimationController Animation { get; private set; }
     [HideInInspector] public PlayerAttackController Attacking  { get; private set; }
+    [HideInInspector] public PlayerData Data  { get; private set; }
 
     [SerializeField] private PlayerUI playerUI;
 
@@ -31,17 +32,26 @@ public class PlayerController : MonoBehaviour, IService
         Movement = GetComponent<PlayerMovement>();
         Animation = GetComponent<PlayerAnimationController>();
         Attacking = GetComponent<PlayerAttackController>();
+        Data = GetComponent<PlayerData>();
 
         Input.AttackPressed += Attacking.Attack;
-        Input.InteractNpc += 
         Input.NpcZoneEntered += playerUI.ShowInteractBtn;
         Input.NpcZoneExit += playerUI.HideInteractBtn;
+        Data.OnUpdateStats += UpateStats;
         
         // Инициализация state machine
         StateMachine = new PlayerStateMachine();
         IdleState = new PlayerIdleState(this, StateMachine);
         WalkState = new PlayerWalkState(this, StateMachine);
         InteractState = new PlayerInteractState(this, StateMachine);
+    }
+    
+    private void UpateStats()
+    {
+        Attacking.Dmg = PlayerStats.Damage;
+        Attacking.Cooldown = PlayerStats.AttackSpeed;
+        Movement.WalkSpeed = PlayerStats.Speed;
+        Data.playerHealth.health = PlayerStats.Health;
     }
 
     private void Start()

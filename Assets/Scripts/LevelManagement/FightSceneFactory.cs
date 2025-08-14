@@ -7,6 +7,8 @@ using Unity.VisualScripting;
 
 public class FightSceneFactory: MonoBehaviour
 {
+    public bool resetStats = false;
+    
     [SerializeField] private PlayerController playerController;
     private GameObject _playerObj;
     
@@ -19,6 +21,16 @@ public class FightSceneFactory: MonoBehaviour
         
         ServiceLocator.Initialize();
         ServiceLocator.Current.Register(_playerObj.GetComponent<PlayerController>());
+    }
+
+    private void Start()
+    {
+        if (resetStats)
+        {
+            PlayerStats.ResetStats();
+            RuneManager.ResetExcludedRunes();
+            playerController.Data.UpdateStats();
+        }
     }
 
     private void Instantiating()

@@ -5201,6 +5201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetStats: 0
   playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
   enemiesPrefs: []
 --- !u!4 &1110964065
@@ -7558,6 +7559,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 37687838878580569, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: attack but
+      objectReference: {fileID: 0}
+    - target: {fileID: 68148052975476400, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: ???????????????
+      objectReference: {fileID: 0}
     - target: {fileID: 2183025368798024473, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Type
       value: 0
@@ -7572,7 +7581,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2183025368798024473, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398472567202879094, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: ????????????
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716523010362687580, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: pot fdfg
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716523010362687580, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 4173c4bf897078d44af47ea85e0bfa9f, type: 3}
+    - target: {fileID: 4716523010362687580, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716523010362687580, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5301580966376652351, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Name
@@ -7621,6 +7650,30 @@ PrefabInstance:
     - target: {fileID: 5655539305781961759, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5765295375200397083, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821739419878929773, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: qwerty
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821739419878929773, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 4173c4bf897078d44af47ea85e0bfa9f, type: 3}
+    - target: {fileID: 5821739419878929773, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5821739419878929773, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_FontData.m_FontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325618236311952921, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_Text
+      value: ?????????
       objectReference: {fileID: 0}
     - target: {fileID: 7354359263653003915, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7807,6 +7860,10 @@ PrefabInstance:
     - target: {fileID: 1822235717384799114, guid: 61410939a35946a4d8c4d5b93a17bb81, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 47
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603831957077138255, guid: 61410939a35946a4d8c4d5b93a17bb81, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6593075350845133934, guid: 61410939a35946a4d8c4d5b93a17bb81, type: 3}
       propertyPath: m_Name

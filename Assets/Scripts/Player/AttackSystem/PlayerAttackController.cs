@@ -4,7 +4,9 @@ using UnityEngine;
 public class PlayerAttackController : MonoBehaviour
 {
     public Action OnAttack;
-    
+
+    public float Cooldown = 0.6f;
+    public float Dmg = 40f;
     [SerializeField] private PlayerConfig _attackData;
     [SerializeField] private Transform _weaponPivot; // Точка, от которой идёт атака (обычно чуть перед игроком)
     
@@ -13,7 +15,7 @@ public class PlayerAttackController : MonoBehaviour
 
     private bool CanAttack()
     {
-        return Time.time >= _lastAttackTime + _attackData.Cooldown && !_isAttacking;
+        return Time.time >= _lastAttackTime + Cooldown && !_isAttacking;
     }
 
     public void Attack()
@@ -66,7 +68,7 @@ public class PlayerAttackController : MonoBehaviour
                     // Наносим урон
                     if (hit.TryGetComponent<EnemyData>(out var health))
                     {
-                        health.TakeDamage(_attackData.Damage);
+                        health.TakeDamage(Dmg);
                     }
                 }
             }

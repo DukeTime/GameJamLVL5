@@ -10,7 +10,7 @@
       "emotion": "",
       "text": "Кто ты?",
       "encounters": [
-        "NextScene"
+        "RuneChoice"
       ]
     }
   ]

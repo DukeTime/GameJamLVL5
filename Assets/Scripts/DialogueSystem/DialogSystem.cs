@@ -5,6 +5,7 @@ using UnityEngine;
 public class DialogSystem : MonoBehaviour
 {
     public static DialogSystem Instance { get; private set; }
+    //public bool dialogueEnable;
     
     [SerializeField] private DialoguesInteractions dialogueInteractions;
     [SerializeField] private string dialogsFolder = "Dialogs";
@@ -32,6 +33,18 @@ public class DialogSystem : MonoBehaviour
 
         LoadAllCharacters();
         dialogueInteractions.Init();
+    }
+
+    public void DialogueDisable()
+    {
+        StopCoroutine(DialogueCor());
+        DialogView.Instance.Hide();
+    }
+    
+    public void DialogueEnable()
+    {
+        DialogView.Instance.Show();
+        StartCoroutine(DialogueCor());
     }
     
     private void LoadAllCharacters()

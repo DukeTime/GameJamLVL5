@@ -30,6 +30,7 @@ public class GlobalGameController : MonoBehaviour
         // else
         //
         SceneManager.LoadScene(sceneIndex);
+        Instance.CutsceneUnfreeze();
     }
 
     public void Pause()

@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rb;
     private PlayerInputHandler _input;
     
-    private float WalkSpeed => config.walkSpeed;
+    public float WalkSpeed = 5f;
     private bool _isPushed = false;
     private Vector2 _pushVelocity;
 

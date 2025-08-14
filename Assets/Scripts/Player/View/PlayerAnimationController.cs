@@ -50,27 +50,30 @@ public class PlayerAnimationController : MonoBehaviour
 
     void Update()
     {
-        UpdateAnimationParameters();
-        // Получаем позицию мыши в мировых координатах
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0; // Обнуляем Z, так как мы работаем в 2D
+        if (!GlobalGameController.Instance.CutsceneFreezed)
+        {
+            UpdateAnimationParameters();
+            // Получаем позицию мыши в мировых координатах
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0; // Обнуляем Z, так как мы работаем в 2D
 
-        // Вычисляем разницу по X между мышью и игроком
-        float xDifference = mousePosition.x - playerTransform.position.x;
+            // Вычисляем разницу по X между мышью и игроком
+            float xDifference = mousePosition.x - playerTransform.position.x;
 
-        // Определяем значение comparisonResult в соответствии с условиями
-        if (xDifference >= significantDistance)
-        {
-            comparisonResult = 1f;
-        }
-        else if (xDifference < -significantDistance)
-        {
-            comparisonResult = -1f;
-        }
-        else
-        {
-            // Нормализуем разницу в диапазоне [-1, 1] для незначительных смещений
-            comparisonResult = Mathf.Clamp(xDifference / significantDistance, -1f, 1f);
+            // Определяем значение comparisonResult в соответствии с условиями
+            if (xDifference >= significantDistance)
+            {
+                comparisonResult = 1f;
+            }
+            else if (xDifference < -significantDistance)
+            {
+                comparisonResult = -1f;
+            }
+            else
+            {
+                // Нормализуем разницу в диапазоне [-1, 1] для незначительных смещений
+                comparisonResult = Mathf.Clamp(xDifference / significantDistance, -1f, 1f);
+            }
         }
     }
 }
