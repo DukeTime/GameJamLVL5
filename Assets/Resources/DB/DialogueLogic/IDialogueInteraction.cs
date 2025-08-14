@@ -1,4 +1,6 @@
+using System.Collections;
+
 public interface IDialogueInteraction
 {
-    public void Activate();
+    public IEnumerator Activate();
 }

@@ -1,0 +1,29 @@
+{
+    "phrases": [
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Я чувствую… Оковы дрожат. Она слабеет.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Почему?",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Ты уничтожаешь еë последователей, их вера угасает.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Скоро… Совсем скоро ты сможешь нанести удар. Ну же, поторопись, стань ещë сильнее!",
+            "textStyle": "",
+            "encounters": ["RuneChoice","NextScene"]
+        }
+    ]
+}

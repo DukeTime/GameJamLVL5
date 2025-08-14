@@ -38,8 +38,8 @@ public class PlayerData: MonoBehaviour
     private void Die()
     {
         GlobalGameController.Instance.CutsceneFreeze();
-        GlobalGameController.Instance.sceneProgress = 2;
+        GlobalGameController.Instance.sceneProgress = 0;
         
-        StartCoroutine(GlobalGameController.Instance.LoadScene(2));
+        StartCoroutine(GlobalGameController.Instance.LoadScene(0));
     }
 }

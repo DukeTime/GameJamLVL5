@@ -19,11 +19,19 @@ public class ViewManager : MonoBehaviour
     [SerializeField] private Button option2Btn;
     [SerializeField] private Button option3Btn;
     [SerializeField] private Animator runeAnimator;
+    
+    [SerializeField] private Text newRuneName;
+    [SerializeField] private Text newRuneAltName;
+    [SerializeField] private Text newRuneDesc;
+    [SerializeField] private Animator runeDescAnimator;
+    [SerializeField] private GameObject clckToContinue;
 
     [SerializeField] private Text titleText;
         
     [SerializeField] private Animator titlePanelAnimator;
     [SerializeField] private Animator fadePanelAnimator;
+    
+    private bool waitingFlag = false;
 
     private void Awake()
     {
@@ -37,19 +45,39 @@ public class ViewManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void DoRuneChoice(Rune rune)
+    private IEnumerator DoRuneChoice(Rune rune)
     {
         PlayerStats.ApplyRune(rune);
         ServiceLocator.Current.Get<PlayerController>().Data.UpdateStats();
-        
+
         FinishRuneChoice();
+
+        yield return new WaitForSeconds(1f);
+        
+        yield return StartCoroutine(DisplayNew());
+        
+        waitingFlag = false;
     }
 
-    private IEnumerator Display()
+    private IEnumerator DisplayNew()
     {
-        yield return null;
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        cameraShake.Shake(0.07f, 2.5f);
+        runeDescAnimator.SetBool("Show", true);
+
+        yield return new WaitForSeconds(3f);
+        clckToContinue.SetActive(true);
+        
+        
+        while (!Input.GetMouseButtonDown(0))
+            yield return null;
+        
+        clckToContinue.SetActive(false);
+        runeDescAnimator.SetBool("Show", false);
+        
+        yield return new WaitForSeconds(0.3f);
     }
-    public void StartRuneChoice(List<Rune> runes)
+    public IEnumerator StartRuneChoice(List<Rune> runes)
     {
         option1Txt.text = runes[0].Name;
         option2Txt.text = runes[1].Name;
@@ -57,11 +85,14 @@ public class ViewManager : MonoBehaviour
         option1Desc.text = runes[0].Description;
         option2Desc.text = runes[1].Description;
         option3Desc.text = runes[2].Description;
-        option1Btn.onClick.AddListener(() => DoRuneChoice(runes[0]));
-        option2Btn.onClick.AddListener(() => DoRuneChoice(runes[1]));
-        option3Btn.onClick.AddListener(() => DoRuneChoice(runes[2]));
+        option1Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[0])));
+        option2Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[1])));
+        option3Btn.onClick.AddListener(() => StartCoroutine(DoRuneChoice(runes[2])));
         
         runeAnimator.SetBool("RunePanelVisible", true);
+        
+        waitingFlag = true;
+        yield return new WaitUntil(() => !waitingFlag);
     }
     
     public void FinishRuneChoice()

@@ -1,0 +1,59 @@
+{
+    "phrases": [
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Почему мы? ",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Почему мы что?",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Почему мы рождены с языком, что противен ей?",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Я не могу дать ответ на этот вопрос.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Разве тебе не одиноко?",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Одиноко?... Таких, как мы, бесчисленное множество… Однако “нас” не существует",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Ты опять говоришь загадками.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Не хочу портить впечатления.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Тебе пора стать сильнее.",
+            "textStyle": "",
+            "encounters": ["RuneChoice","NextScene"]
+        }
+    ]
+}

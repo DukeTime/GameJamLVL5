@@ -1,0 +1,57 @@
+{
+    "phrases": [
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "who are you. what are you doing here.",
+            "textStyle": "EngRune"
+        },
+        {
+            "characterId": "Игрок",
+            "emotion": "",
+            "text": "Я тебя не понимаю.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "that language. . . so that is who you are.",
+            "textStyle": "EngRune"
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "that means i failed too.",
+            "textStyle": "EngRune"
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Ты ведь не знаешь, где ты и кто ты. А это место опасно… Я помогу тебе, а взамен ты поможешь мне.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Богиня… Все вокруг одержимы еë силой… Она называет себя столпом мира, но на самом деле она просто промывает всем мозги и злоупотребляет своими силами… Даже- Нет, ты ещë увидишь.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Ты же видишь, что она со мной сделала. Теперь я навсегда прикован к этому чëртовому камню. Возьми мой меч. Кроме тебя, никто не сможет завершить начатое.",
+            "textStyle": ""
+        },
+        {
+            "characterId": "Незнакомец",
+            "emotion": "",
+            "text": "Да… Все ровно так, как и должно было быть. В этот раз у нас получится. ",
+            "textStyle": "",
+            "encounters": ["NextScene"]
+        }
+    ]
+}
+    
+
+    
+

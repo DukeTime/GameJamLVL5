@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class DialogueRuneChoice : MonoBehaviour, IDialogueInteraction
 {
-    public void Activate()
+    public IEnumerator Activate()
     {
         List<Rune>newRunes = RuneManager.GetAvailableRunes(3);
         
-        ViewManager.Instance.StartRuneChoice(newRunes);
         DialogSystem.Instance.DialogueDisable();
+        yield return StartCoroutine(ViewManager.Instance.StartRuneChoice(newRunes));
+        DialogSystem.Instance.DialogueEnable();
     }
 }

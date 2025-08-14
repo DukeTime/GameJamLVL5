@@ -100,9 +100,9 @@ public class DialogSystem : MonoBehaviour
             {
                 foreach (string encounter in currentDialog.phrases[currentPhraseIndex].encounters)
                 {
-                    dialogueInteractions
+                    yield return StartCoroutine(dialogueInteractions
                         .All[encounter]
-                        .Activate();
+                        .Activate());
                 }
             }
             
