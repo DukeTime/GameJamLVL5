@@ -575,7 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88d667869b5440594ebdda98c8cbe2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakePower: 0.1
+  shakePower: 0.05
   shakeDuration: 0.5
   dampingSpeed: 1
 --- !u!114 &122974995
@@ -5422,7 +5422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4025a57f5c697478670fd275921ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: TestDialogue
+  dialogue: B1
   interacted: 0
 --- !u!212 &1889653063
 SpriteRenderer:
@@ -7559,6 +7559,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 13495799992645296, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 37687838878580569, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_Text
       value: attack
@@ -7609,6 +7613,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5301580966376652351, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655539305781961759, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}
+      propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5655539305781961759, guid: d3351b8e185e64a45a4a5d8a178664ff, type: 3}

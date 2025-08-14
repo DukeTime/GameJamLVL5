@@ -6,10 +6,10 @@ using UnityEngine;
 public static class PlayerStats
 {
     // Базовые характеристики
-    private static float baseDamage = 10f;
+    private static float baseDamage = 40f;
     private static float baseSpeed = 5f;
     private static float baseHealth = 100;
-    private static float baseAttackSpeed = 1f;
+    private static float baseAttackSpeed = 0.5f;
 
     // Текущие модификаторы
     private static Dictionary<StatType, float> statModifiers = new Dictionary<StatType, float>();

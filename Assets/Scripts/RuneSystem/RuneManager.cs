@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 public static class RuneManager
 {
@@ -7,24 +8,26 @@ public static class RuneManager
     private static List<Rune> allRunes = new List<Rune>
     {
         // Простые бонусы
-        new Rune("Усиление", "attack", "УРОН ВОЗРАСТАЕТ", 
-            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Damage, 100f }}),
-        new Rune("Ускорение", "speedy", "СКОРОСТЬ ВОЗРАСТАЕТ", 
-            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Speed, 10f }}),
+        new Rune("Усиление", "attack", "<color=green>↑ УРОН</color>", 
+            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Damage, 15f }}),
+        new Rune("Ускорение", "speedy", "<color=green>↑ СКОРОСТЬ</color>", 
+            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Speed, 1.25f }}),
         // new Rune("Руна здоровья", "Руна силы", "+25% здоровья", 
         //     RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Health, 0.25f }}),
-        new Rune("Ловкость", "dexter", "СКОРОСТЬ АТАК ВОЗРАСТАЕТ", 
-            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.AttackSpeed, 0.1f }}),
+        new Rune("Ловкость", "dexter", "<color=green>↑ СКОРОСТЬ АТАК</color>", 
+            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.AttackSpeed, -0.125f }}),
+        new Rune("Живучесть", "wounds", "<color=green>↑ ЗДОРОВЬЕ</color>", 
+            RuneType.StatBonus, new Dictionary<StatType, float>{{ StatType.Health, 35f }}),
         
         // Смешанные руны (бонус + штраф)
-        new Rune("Натиск","hhaste",  "↑↑ СКОРОСТЬ\n↓ УРОН", 
-            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Damage, 0.3f }, { StatType.Health, -0.15f }}),
-        new Rune("Вихрь","tornad",  "↑↑ СКОРОСТЬ АТАК\n↓ СКОРОСТЬ", 
-            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
-        new Rune("Рвение","berser",  "↑↑ УРОН\n↓ ЗДОРОВЬЕ", 
-            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
-        new Rune("Укрепление","aarmor",  "↑ ЗДОРОВЬЕ\n↓ СКОРОСТЬ", 
-            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 0.25f }, { StatType.Damage, -0.1f }}),
+        new Rune("Натиск","hhaste",  "<color=green>↑↑ СКОРОСТЬ</color>" + Environment.NewLine + "<color=red>↓ УРОН</color>", 
+            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Speed, 2.5f }, { StatType.Damage, -10f }}),
+        new Rune("Вихрь","tornad",  "<color=green>↑↑ СКОРОСТЬ АТАК</color>" + Environment.NewLine + "<color=red>↓ СКОРОСТЬ</color>", 
+            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.AttackSpeed, -0.25f }, { StatType.Speed, -0.1f }}),
+        new Rune("Рвение","berser",  "<color=green>↑↑ УРОН</color>" + Environment.NewLine + "<color=red>↓ ЗДОРОВЬЕ</color>", 
+            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Damage, 30f }, { StatType.Health, -0.1f }}),
+        new Rune("Укрепление","aarmor",  "<color=green>↑↑ ЗДОРОВЬЕ</color>" + Environment.NewLine + "<color=red>↓ СКОРОСТЬ</color>", 
+            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Health, 35f }, { StatType.Speed, -1.25f }}),
             
         // Уникальные способности
         // new Rune("Руна комбо","Руна силы",  

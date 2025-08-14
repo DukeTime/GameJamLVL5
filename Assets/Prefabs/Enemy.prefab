@@ -312,7 +312,7 @@ MonoBehaviour:
   classicWindup: 1.2
   classicHitRadius: 2
   classicHitOffset: 0.8
-  classicDamage: 10
+  classicDamage: 40
   classicKnockback: 6
   classicAttackTriggerDistance: 1.25
   classicStopDistance: 1
@@ -321,7 +321,7 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 0.22
   dashHitRadius: 0.6
-  dashDamage: 12
+  dashDamage: 40
   dashKnockback: 8
   dashStopOnWall: 1
   dashAttackTriggerDistance: 3

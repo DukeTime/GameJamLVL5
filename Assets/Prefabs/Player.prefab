@@ -452,6 +452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowdownFactor: 0.9
   config: {fileID: 11400000, guid: 8b80fdfbeacd14b498e5c862155bfe45, type: 2}
+  WalkSpeed: 5
 --- !u!114 &8538596184048004818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -609,6 +610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc85ff4ac1ba4a3db0b0a0ac73957229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cooldown: 0.6
+  Dmg: 40
   _attackData: {fileID: 11400000, guid: 8b80fdfbeacd14b498e5c862155bfe45, type: 2}
   _weaponPivot: {fileID: 6181444277306839639}
 --- !u!114 &1873292536510014463
@@ -667,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f53b59aaee833d48b24806b25c6b7f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 25
+  health: 100
 --- !u!114 &7866828661234320749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,6 +684,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 4469340722189507570}
+  speed: 0
+  attackSpeed: 0
+  maxHealth: 0
+  dmg: 0
 --- !u!1 &2720063163690286497
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,13 +54,17 @@ public class ViewManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         
-        yield return StartCoroutine(DisplayNew());
+        yield return StartCoroutine(DisplayNew(rune));
         
         waitingFlag = false;
     }
 
-    private IEnumerator DisplayNew()
+    private IEnumerator DisplayNew(Rune rune)
     {
+        newRuneName.text = rune.Name;
+        newRuneAltName.text = rune.AltName;
+        newRuneDesc.text = rune.Description;
+        
         CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
         cameraShake.Shake(0.07f, 2.5f);
         runeDescAnimator.SetBool("Show", true);

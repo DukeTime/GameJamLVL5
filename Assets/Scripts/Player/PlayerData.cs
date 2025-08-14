@@ -17,6 +17,8 @@ public class PlayerData: MonoBehaviour
     {
         playerHealth = GetComponent<PlayerHealth>();
         playerHealth.OnHpIsGone += Die;
+        
+        UpdateStats();
     }
 
     private void OnDisable()
