@@ -6,7 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     [Header("Health")]
     public int maxHP = 40;
-    [SerializeField] private int currentHP;
+    [SerializeField] private float currentHP;
 
     [Header("Hit feedback (optional)")]
     public float invulAfterHit = 0.05f;
@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
     public UnityEvent onHit;
     public UnityEvent onDeath;
 
-    bool _invul;
+    bool _invul = false;
     Color _origColor;
 
     void Awake()
@@ -28,9 +28,10 @@ public class EnemyHealth : MonoBehaviour
         if (flashRenderer) _origColor = flashRenderer.color;
     }
 
-    // ВАЖНО: именно этот метод вызывают удары/пули (как у обычного врага)
-    public void TakeDamage(int amount)
+    // пїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ)
+    public void TakeDamage(float amount)
     {
+        Debug.Log(11);
         if (_invul) return;
         amount = Mathf.Max(0, amount);
         if (amount <= 0) return;

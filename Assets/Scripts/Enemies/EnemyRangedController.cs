@@ -6,40 +6,40 @@ using System.Collections;
 public class EnemyRangedController : MonoBehaviour
 {
     [Header("Perception")]
-    public float viewRadius = 14f;                  // радиус обнаружения игрока
-    public LayerMask losObstacleMask;               // слой стен для LOS (видимости)
+    public float viewRadius = 14f;                  // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    public LayerMask losObstacleMask;               // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ LOS (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 
     [Header("Movement")]
-    public float moveSpeed = 3.0f;                  // прокинем в mover.maxSpeed
-    public float repathInterval = 0.2f;             // как часто обновлять цель пути
+    public float moveSpeed = 3.0f;                  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ mover.maxSpeed
+    public float repathInterval = 0.2f;             // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 
-    [Header("Kiting (держим дистанцию)")]
-    public float preferredRange = 6.0f;             // «комфортная» дистанция
-    public float minRange = 4.5f;                   // если ближе — отходим
-    public float maxRange = 8.0f;                   // если дальше — подходим
+    [Header("Kiting (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)")]
+    public float preferredRange = 6.0f;             // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public float minRange = 4.5f;                   // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public float maxRange = 8.0f;                   // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-    [Header("Orbit logic (как у мили)")]
-    public bool useOrbitSlots = true;               // занимать слот у PlayerOrbitTargets
+    [Header("Orbit logic (пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ)")]
+    public bool useOrbitSlots = true;               // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ PlayerOrbitTargets
     public float slotReclaimInterval = 0.8f;
 
     [Header("Shooting")]
-    public GameObject projectilePrefab;             // префаб с Projectile.cs
-    public Transform muzzle;                        // точка вылета
-    public float shootCooldown = 1.2f;              // КД между выстрелами
-    public float shootWindup = 0.25f;               // телеграф перед выстрелом (ShowWindup)
-    public float maxShootRange = 10f;               // дальше — не стреляем
-    public bool stopToShoot = true;                 // останавливаемся на время выстрела
+    public GameObject projectilePrefab;             // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ Projectile.cs
+    public Transform muzzle;                        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    public float shootCooldown = 1.2f;              // пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public float shootWindup = 0.25f;               // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (ShowWindup)
+    public float maxShootRange = 10f;               // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    public bool stopToShoot = true;                 // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     [Header("Damage filter")]
-    public LayerMask playerMask;                    // слой игрока (или оставь 0 и используем Tag "Player")
+    public LayerMask playerMask;                    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 0 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Tag "Player")
 
     [Header("Sprites / Visual")]
-    public EnemySpriteAnimator anim;                // тот же аниматор, что у мили
-    [SerializeField] private Transform visualRoot;  // общий контейнер (спрайт+тень) — вращаем на 0/180 по Y
+    public EnemySpriteAnimator anim;                // пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
+    [SerializeField] private Transform visualRoot;  // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ+пїЅпїЅпїЅпїЅ) пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 0/180 пїЅпїЅ Y
 
     [Header("Debug")]
     public bool drawGizmos = true;
-
+    
     // runtime
     Transform player;
     EnemyPathMover mover;
@@ -51,12 +51,19 @@ public class EnemyRangedController : MonoBehaviour
     float nextRepathAt;
     float nextSlotReclaimAt;
     bool onCooldown;
+    
+    [SerializeField] private EnemyData data;
+    [SerializeField] private EnemyView view;
+    [SerializeField] private bool spawning = true;
 
     void Start()
     {
+        StartCoroutine(Timer(1f));
         mover = GetComponent<EnemyPathMover>();
         rb = GetComponent<Rigidbody2D>();
         mover.maxSpeed = moveSpeed;
+        
+        data.OnDie += () => StartCoroutine(view.Death());
 
         var p = GameObject.FindWithTag("Player");
         if (!p) { Debug.LogError("Player not found (tag 'Player')."); enabled = false; return; }
@@ -84,6 +91,11 @@ public class EnemyRangedController : MonoBehaviour
 
         if (!muzzle) muzzle = transform;
     }
+    private IEnumerator Timer(float amount)
+    {
+        yield return new WaitForSeconds(amount);
+        spawning = false;
+    }
 
     void OnDestroy()
     {
@@ -93,12 +105,13 @@ public class EnemyRangedController : MonoBehaviour
 
     void Update()
     {
+        if (spawning) return;
         if (!player) return;
 
         float dist = Vector2.Distance(transform.position, player.position);
         FaceByPlayerX();
 
-        // движение (кайт/подход/обход)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅ)
         if (Time.time >= nextRepathAt && (!onCooldown || !stopToShoot))
         {
             nextRepathAt = Time.time + repathInterval;
@@ -117,7 +130,7 @@ public class EnemyRangedController : MonoBehaviour
             }
         }
 
-        // атака — LOS + дистанция + КД
+        // пїЅпїЅпїЅпїЅпїЅ пїЅ LOS + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅ
         if (!onCooldown && dist <= maxShootRange && HasLOS())
             StartCoroutine(ShootRoutine());
     }
@@ -161,15 +174,15 @@ public class EnemyRangedController : MonoBehaviour
     {
         onCooldown = true;
 
-        // стопим навигацию на время телеграфа/шота — как у милишника
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         bool prevMover = mover.enabled;
         if (stopToShoot) mover.enabled = false;
 
-        // телеграф
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         if (anim) anim.ShowWindup(false);
         if (shootWindup > 0f) yield return new WaitForSeconds(shootWindup);
 
-        // выстрел + анимация атаки
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ + пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (anim) anim.PlayAttackOnce();
 
         if (projectilePrefab)
@@ -182,11 +195,11 @@ public class EnemyRangedController : MonoBehaviour
             if (pr) pr.Initialize(dir, playerMask, losObstacleMask);
         }
 
-        // вернуть ходьбу
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         if (stopToShoot) mover.enabled = prevMover;
         if (anim) anim.PlayWalkLoop();
 
-        // КД
+        // пїЅпїЅ
         yield return new WaitForSeconds(shootCooldown);
         onCooldown = false;
     }

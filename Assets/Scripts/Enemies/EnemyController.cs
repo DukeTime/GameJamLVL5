@@ -86,8 +86,14 @@ public class EnemyController : MonoBehaviour
     float curStopDistance;
     float curSlotIgnoreDistance;
 
+    [SerializeField] private EnemyData data;
+    [SerializeField] private EnemyView view;
+    [SerializeField] private bool spawning = true;
     void Start()
     {
+        StartCoroutine(Timer(1f));
+        data.OnDie += () => StartCoroutine(view.Death());
+        
         rb = GetComponent<Rigidbody2D>();
         mover = GetComponent<EnemyPathMover>();
         mover.maxSpeed = moveSpeed;
@@ -118,6 +124,12 @@ public class EnemyController : MonoBehaviour
         if (!visualRoot && anim) visualRoot = anim.transform.parent != null ? anim.transform.parent : anim.transform;
     }
 
+    private IEnumerator Timer(float amount)
+    {
+        yield return new WaitForSeconds(amount);
+        spawning = false;
+    }
+
     void ApplyAttackTuning()
     {
         if (attackKindOnSpawn == AttackKind.Classic)
@@ -142,6 +154,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (spawning) return;
         if (player == null) return;
 
         float distToPlayer = Vector2.Distance(transform.position, player.position);

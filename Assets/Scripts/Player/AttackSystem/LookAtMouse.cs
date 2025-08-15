@@ -32,7 +32,7 @@ public class MouseAimController : MonoBehaviour
     [SerializeField] private float comparisonResult;
     [SerializeField] private float currentAngle;
     [SerializeField] private float targetAngle;
-    [SerializeField] private bool facingRight = true; // Текущее направление
+    //[SerializeField] private bool facingRight = true; // Текущее направление
     [SerializeField] private SpriteRenderer spriteRenderer; // Для отражения спрайта
 
     private void Awake()
