@@ -5,15 +5,15 @@ public class Projectile : MonoBehaviour
     [Header("Flight")]
     public float speed = 12f;
     public float lifeTime = 3f;
-    public float radius = 0.18f;          // толщина свипа
+    public float radius = 0.18f;          // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
     [Header("Damage")]
     public int damage = 8;
     public float knockback = 5f;
 
     [Header("Layers")]
-    public LayerMask playerMask;          // если 0 — фильтруем по Tag "Player"
-    public LayerMask obstacleMask;        // стены
+    public LayerMask playerMask;          // пїЅпїЅпїЅпїЅ 0 пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Tag "Player"
+    public LayerMask obstacleMask;        // пїЅпїЅпїЅпїЅпїЅ
 
     Vector2 _dir;
     bool _armed;
@@ -35,14 +35,14 @@ public class Projectile : MonoBehaviour
         Vector2 step = _dir * (speed * Time.deltaTime);
         float dist = step.magnitude;
 
-        // стоп по стене
+        // пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         if (obstacleMask.value != 0 && Physics2D.CircleCast(pos, radius, _dir, dist, obstacleMask))
         {
             Destroy(gameObject);
             return;
         }
 
-        // попадание в игрока (свип)
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ)
         int mask = (playerMask.value != 0) ? playerMask.value : Physics2D.DefaultRaycastLayers;
         var hits = Physics2D.CircleCastAll(pos, radius, _dir, dist, mask);
 
@@ -52,7 +52,12 @@ public class Projectile : MonoBehaviour
             if (playerMask.value == 0 && !col.CompareTag("Player")) continue;
 
             var health = col.GetComponentInParent<PlayerHealth>();
-            if (health != null) health.TakeDamage(damage);
+            if (health != null)
+            {
+                Debug.Log(11);
+                Destroy(gameObject);
+                health.TakeDamage(damage);
+            }
             else col.SendMessage("TakeDamage", damage, SendMessageOptions.DontRequireReceiver);
 
             var prb = col.attachedRigidbody ?? col.GetComponentInParent<Rigidbody2D>();

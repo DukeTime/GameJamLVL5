@@ -4802,6 +4802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allReset: 0
   resetStats: 0
   locationTitle: "\u0425\u0420\u0410\u041C (4/4)"
   playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
@@ -5024,7 +5025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da4025a57f5c697478670fd275921ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: B3
+  dialogue: B4
   interacted: 0
 --- !u!212 &1889653063
 SpriteRenderer:

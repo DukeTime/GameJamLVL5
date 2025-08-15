@@ -15,7 +15,7 @@ namespace LevelManagement
         private void Start()
         {
             DialogSystem.Instance.LoadDialog(dialogue);
-            StartCoroutine(sd());
+            //StartCoroutine(sd());
         }
 
         private IEnumerator sd()

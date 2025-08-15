@@ -346,7 +346,6 @@ MonoBehaviour:
   comparisonResult: 0
   currentAngle: 0
   targetAngle: 0
-  facingRight: 0
   spriteRenderer: {fileID: 3169104433938466965}
 --- !u!1 &2691104930053176123
 GameObject:
@@ -499,7 +498,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1.205603}
+  m_Offset: {x: 0, y: -1.003225}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -509,7 +508,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.19734025}
+  m_Size: {x: 1, y: 0.60209626}
   m_EdgeRadius: 0
 --- !u!212 &890900907029801856
 SpriteRenderer:
@@ -1052,7 +1051,6 @@ MonoBehaviour:
   comparisonResult: 1
   currentAngle: 270.85684
   targetAngle: 270.85684
-  facingRight: 1
   spriteRenderer: {fileID: 6567621039496757561}
 --- !u!1 &5420761245883074188
 GameObject:

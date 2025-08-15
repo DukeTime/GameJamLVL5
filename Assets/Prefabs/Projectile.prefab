@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ed770929b32b8478b34f3f747dfd1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 3
   lifeTime: 3
   radius: 0.18
-  damage: 20
+  damage: 40
   knockback: 5
   playerMask:
     serializedVersion: 2

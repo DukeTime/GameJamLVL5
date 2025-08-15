@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allReset: 0
   resetStats: 0
   locationTitle: 
   playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
@@ -9202,7 +9203,7 @@ Transform:
   m_GameObject: {fileID: 521346378}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.03, y: 6.94, z: 0}
+  m_LocalPosition: {x: -9.84, y: 7.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9233,7 +9234,7 @@ Transform:
   m_GameObject: {fileID: 654555063}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.08, y: 7, z: 0}
+  m_LocalPosition: {x: 10.04, y: 8.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11353,6 +11354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c6254cc3ae49f29916ad8e4de73ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allReset: 0
   resetStats: 0
   locationTitle: "\u0420\u0423\u0418\u041D\u042B"
   playerController: {fileID: 3818281597649534243, guid: 7f45f19159090e04f9fd62136f22b60a, type: 3}
@@ -11393,14 +11395,14 @@ MonoBehaviour:
   waves:
   - enemies:
     - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
-      count: 7
+      count: 3
     preWaveDelay: 0
-    perSpawnDelay: 0.1
+    perSpawnDelay: 0.25
   - enemies:
     - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
-      count: 8
+      count: 4
     preWaveDelay: 0
-    perSpawnDelay: 0.1
+    perSpawnDelay: 0.25
   afterWaveDelay: 1
   avoidNearestHatchToPlayer: 1
   statue: {fileID: 415562530}
