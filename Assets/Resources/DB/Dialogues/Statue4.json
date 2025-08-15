@@ -1,0 +1,10 @@
+{
+  "phrases": [
+    {
+      "characterId": "Статуя богини",
+      "emotion": "",
+      "text": "ДОВОЛЬНО! Ты зашел слишком далеко...",
+      "encounters": ["NextScene"]
+    }
+  ]
+}

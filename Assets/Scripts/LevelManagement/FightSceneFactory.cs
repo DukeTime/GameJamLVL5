@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 
 public class FightSceneFactory: MonoBehaviour
 {
+    public bool allReset = false;
     public bool resetStats = false;
     public string locationTitle;
     
@@ -33,6 +34,8 @@ public class FightSceneFactory: MonoBehaviour
             PlayerStats.ResetStats();
             RuneManager.ResetExcludedRunes();
             _playerObj.GetComponent<PlayerController>().Data.UpdateStats();
+            if (allReset)
+                PlayerPrefs.SetString("Runes", "[]");
         }
     }
 
