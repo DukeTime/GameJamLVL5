@@ -6,6 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public float health = 100;
     
     public Action OnHpIsGone;
+    public Action OnHurt;
 
     public void TakeDamage(int damage)
     {
@@ -14,6 +15,11 @@ public class PlayerHealth : MonoBehaviour
         {
             health = 0;
             OnHpIsGone?.Invoke();
+        }
+        else
+        {
+            Debug.Log(1);
+            OnHurt?.Invoke();
         }
         // ��� ������ ������ ��� ��������
     }
