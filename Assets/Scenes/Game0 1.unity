@@ -10033,24 +10033,8 @@ MonoBehaviour:
   waves:
   - enemies:
     - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
-      count: 3
-    - prefab: {fileID: 2882268034879650907, guid: 1c105503c2d6d2c45bc630127db598d8, type: 3}
       count: 2
     preWaveDelay: 1
-    perSpawnDelay: 0.1
-  - enemies:
-    - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
-      count: 4
-    - prefab: {fileID: 2882268034879650907, guid: 1c105503c2d6d2c45bc630127db598d8, type: 3}
-      count: 2
-    preWaveDelay: 2
-    perSpawnDelay: 0.1
-  - enemies:
-    - prefab: {fileID: 2882268034879650907, guid: 059b33fe8f79c4c48abd1c8dc423934a, type: 3}
-      count: 3
-    - prefab: {fileID: 2882268034879650907, guid: 1c105503c2d6d2c45bc630127db598d8, type: 3}
-      count: 3
-    preWaveDelay: 3
     perSpawnDelay: 0.1
   afterWaveDelay: 1
   avoidNearestHatchToPlayer: 1

@@ -12,9 +12,9 @@ public class EnemyHurtbox : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
 
-        if (other.CompareTag("Player")) // или твой тег удара
+        if (other.CompareTag("Player")) // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
-            enemyHealth.TakeDamage(20); // или урон из оружия
+            enemyHealth.TakeDamage(PlayerStats.Damage); // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         }
     }
 }

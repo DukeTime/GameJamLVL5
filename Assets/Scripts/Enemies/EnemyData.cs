@@ -1,9 +1,13 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class EnemyData: MonoBehaviour
 {
     [SerializeField] private float _maxHealth = 100f;
     private float _currentHealth;
+
+    public Action OnDie;
 
     private void Start()
     {
@@ -21,6 +25,7 @@ public class EnemyData: MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject);
+        OnDie?.Invoke();
+        //Destroy(gameObject);
     }
 }
