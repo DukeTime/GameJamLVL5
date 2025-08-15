@@ -33,7 +33,6 @@ public class FightSceneFactory: MonoBehaviour
             PlayerStats.ResetStats();
             RuneManager.ResetExcludedRunes();
             _playerObj.GetComponent<PlayerController>().Data.UpdateStats();
-            PlayerPrefs.SetString("Runes", "[]");
         }
     }
 

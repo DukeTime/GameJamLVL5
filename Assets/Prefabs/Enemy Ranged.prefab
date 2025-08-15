@@ -512,9 +512,9 @@ MonoBehaviour:
   slotReclaimInterval: 0.8
   projectilePrefab: {fileID: 761631943063199480, guid: 72153420b490dba4cabc34ca2ba80951, type: 3}
   muzzle: {fileID: 7409613888892298270}
-  shootCooldown: 3
+  shootCooldown: 15
   shootWindup: 0.25
-  maxShootRange: 10
+  maxShootRange: 3
   stopToShoot: 1
   playerMask:
     serializedVersion: 2
@@ -636,7 +636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9170534017723403398
 Transform:
   m_ObjectHideFlags: 0
