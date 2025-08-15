@@ -30,6 +30,7 @@ public class ViewManager : MonoBehaviour
         
     [SerializeField] private Animator titlePanelAnimator;
     [SerializeField] private Animator fadePanelAnimator;
+    [SerializeField] private Animator hurtFadeAnimator;
     
     private bool waitingFlag = false;
 
@@ -44,9 +45,27 @@ public class ViewManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    public void Init(string title)
+    {
+        titleText.text = title;
+        titlePanelAnimator.SetTrigger("ShowTitle");
+        ServiceLocator.Current.Get<PlayerController>().Data.playerHealth.OnHurt += Hurt;
+    }
+
+    public void Hurt()
+    {
+        CameraShake cameraShake = Camera.main.GetComponent<CameraShake>();
+        cameraShake.Shake(0.07f, 0.5f);
+        
+        hurtFadeAnimator.SetTrigger("Hurt");
+    }
 
     private IEnumerator DoRuneChoice(Rune rune)
     {
+        option1Btn.onClick.RemoveAllListeners();
+        option2Btn.onClick.RemoveAllListeners();
+        option3Btn.onClick.RemoveAllListeners();
+        
         PlayerStats.ApplyRune(rune);
         ServiceLocator.Current.Get<PlayerController>().Data.UpdateStats();
 

@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class FightSceneFactory: MonoBehaviour
 {
     public bool resetStats = false;
+    public string locationTitle;
     
     [SerializeField] private PlayerController playerController;
     private GameObject _playerObj;
@@ -25,6 +26,8 @@ public class FightSceneFactory: MonoBehaviour
 
     private void Start()
     {
+        ViewManager.Instance.Init(locationTitle);
+        
         if (resetStats)
         {
             PlayerStats.ResetStats();

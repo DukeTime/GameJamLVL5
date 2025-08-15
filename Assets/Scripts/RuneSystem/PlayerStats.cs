@@ -8,7 +8,7 @@ public static class PlayerStats
     // Базовые характеристики
     private static float baseDamage = 40f;
     private static float baseSpeed = 5f;
-    private static float baseHealth = 100;
+    private static float baseHealth = 60f;
     private static float baseAttackSpeed = 0.5f;
 
     // Текущие модификаторы
@@ -18,10 +18,10 @@ public static class PlayerStats
     private static List<string> abilityPrefabPaths = new List<string>();
 
     // Текущие характеристики с учетом модификаторов
-    public static float Damage { get { return baseDamage * (1 + GetModifier(StatType.Damage)); } }
-    public static float Speed { get { return baseSpeed * (1 + GetModifier(StatType.Speed)); } }
-    public static float Health { get { return baseHealth * (1 + GetModifier(StatType.Health)); } }
-    public static float AttackSpeed { get { return baseAttackSpeed * (1 + GetModifier(StatType.AttackSpeed)); } }
+    public static float Damage { get { return baseDamage + GetModifier(StatType.Damage); } }
+    public static float Speed { get { return baseSpeed + GetModifier(StatType.Speed); } }
+    public static float Health { get { return baseHealth + GetModifier(StatType.Health); } }
+    public static float AttackSpeed { get { return baseAttackSpeed + GetModifier(StatType.AttackSpeed); } }
     
     public static List<string> ActiveAbilities { get { return new List<string>(abilityPrefabPaths); } }
 
@@ -100,6 +100,7 @@ public static class PlayerStats
         {
             statModifiers.Add(type, value);
         }
+        Debug.Log(statModifiers[type]);
     }
 
     // Получить модификатор характеристики

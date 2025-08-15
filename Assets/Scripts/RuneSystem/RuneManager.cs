@@ -25,7 +25,7 @@ public static class RuneManager
         new Rune("Вихрь","tornad",  "<color=green>↑↑ СКОРОСТЬ АТАК</color>" + Environment.NewLine + "<color=red>↓ СКОРОСТЬ</color>", 
             RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.AttackSpeed, -0.25f }, { StatType.Speed, -0.1f }}),
         new Rune("Рвение","berser",  "<color=green>↑↑ УРОН</color>" + Environment.NewLine + "<color=red>↓ ЗДОРОВЬЕ</color>", 
-            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Damage, 30f }, { StatType.Health, -0.1f }}),
+            RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Damage, 30f }, { StatType.Health, -20f }}),
         new Rune("Укрепление","aarmor",  "<color=green>↑↑ ЗДОРОВЬЕ</color>" + Environment.NewLine + "<color=red>↓ СКОРОСТЬ</color>", 
             RuneType.Mixed, new Dictionary<StatType, float>{{ StatType.Health, 35f }, { StatType.Speed, -1.25f }}),
             
